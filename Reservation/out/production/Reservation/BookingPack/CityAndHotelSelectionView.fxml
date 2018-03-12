@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="530.0" prefWidth="921.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="BookingPack.CityAndHotelSelectionController">
+   <children>
+      <ListView fx:id="cityList" prefHeight="530.0" prefWidth="252.0" />
+      <ListView fx:id="hotelList" layoutX="252.0" prefHeight="530.0" prefWidth="252.0" />
+      <AnchorPane layoutX="504.0" layoutY="4.0" prefHeight="522.0" prefWidth="412.0" />
+   </children>
+</AnchorPane>
