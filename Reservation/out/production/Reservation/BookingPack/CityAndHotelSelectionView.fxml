@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
 <?import java.lang.*?>
 <?import java.util.*?>
 <?import javafx.scene.*?>
@@ -8,8 +11,45 @@
 
 <AnchorPane prefHeight="530.0" prefWidth="921.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="BookingPack.CityAndHotelSelectionController">
    <children>
-      <ListView fx:id="cityList" prefHeight="530.0" prefWidth="252.0" />
-      <ListView fx:id="hotelList" layoutX="252.0" prefHeight="530.0" prefWidth="252.0" />
-      <AnchorPane layoutX="504.0" layoutY="4.0" prefHeight="522.0" prefWidth="412.0" />
+      <ListView fx:id="cityList" prefHeight="530.0" prefWidth="252.0">
+         <padding>
+            <Insets left="5.0" />
+         </padding></ListView>
+      <ListView fx:id="hotelListForAllCities" layoutX="252.0" prefHeight="530.0" prefWidth="252.0" />
+      <AnchorPane fx:id="descriptionAndImagePane" layoutX="504.0" prefHeight="272.0" prefWidth="417.0">
+         <children>
+            <Label fx:id="cityOrHotelName" prefHeight="53.0" prefWidth="417.0" text="Label">
+               <tooltip>
+                  <Tooltip text="Click to image to see other pictures of the city." />
+               </tooltip>
+               <font>
+                  <Font size="36.0" />
+               </font>
+               <padding>
+                  <Insets left="5.0" />
+               </padding></Label>
+            <Text fx:id="cityOrHotelDescription" layoutX="13.0" layoutY="74.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" wrappingWidth="391.0" />
+            <Separator layoutY="45.0" prefHeight="16.0" prefWidth="417.0" />
+            <Separator layoutY="217.0" prefHeight="16.0" prefWidth="417.0" />
+            <Text fx:id="hotelRoomAmountOrCityPopulationText" fontSmoothingType="LCD" layoutX="3.0" layoutY="238.0" strokeType="OUTSIDE" strokeWidth="0.0" text="City Population" underline="true">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font></Text>
+            <Text fx:id="yearOfBuiltOrCityAltitudeText" fontSmoothingType="LCD" layoutX="158.0" layoutY="238.0" strokeType="OUTSIDE" strokeWidth="0.0" text="City Altitude(m) " underline="true">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font></Text>
+            <Text fx:id="nightlyCostOrAnnualTouristVisitText" fontSmoothingType="LCD" layoutX="298.0" layoutY="238.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Annual Tourist Visit " underline="true">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font></Text>
+            <Text fx:id="cityPopulationText" layoutX="24.0" layoutY="253.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+            <Text fx:id="cityAltitudeText" layoutX="184.0" layoutY="254.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+            <Text fx:id="annualTouristVisitText" layoutX="332.0" layoutY="253.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+         </children></AnchorPane>
+      <ImageView fx:id="cityImage" fitHeight="258.0" fitWidth="417.0" layoutX="504.0" layoutY="272.0" pickOnBounds="true" preserveRatio="true" />
+      <Button fx:id="backButton" layoutX="518.0" layoutY="478.0" mnemonicParsing="false" onMouseClicked="#backButtonClicked" prefHeight="25.0" prefWidth="69.0" text=" &lt;-- Back" />
+      <Button fx:id="nextButton" layoutX="848.0" layoutY="478.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="69.0" text="Next --&gt;" />
+      <Separator layoutX="504.0" layoutY="264.0" prefHeight="16.0" prefWidth="417.0" />
    </children>
 </AnchorPane>

@@ -29,49 +29,39 @@
                   </LinearGradient>
                </fill>
             </Rectangle>
-            <TextField fx:id="userName" layoutX="13.0" layoutY="71.0" prefHeight="25.0" prefWidth="210.0" promptText="Username">
-               <effect>
-                  <InnerShadow />
-               </effect></TextField>
-            <PasswordField fx:id="userPassword" layoutX="13.0" layoutY="127.0" prefHeight="25.0" prefWidth="210.0" promptText="Password">
-               <effect>
-                  <InnerShadow />
-               </effect></PasswordField>
-            <PasswordField fx:id="userPasswordAgain" layoutX="13.0" layoutY="182.0" prefHeight="25.0" prefWidth="210.0" promptText="Password">
-               <effect>
-                  <InnerShadow />
-               </effect>
-            </PasswordField>
-            <TextField fx:id="userEmail" layoutX="13.0" layoutY="237.0" prefHeight="25.0" prefWidth="210.0" promptText="Email">
-               <effect>
-                  <InnerShadow />
-               </effect>
-            </TextField>
             <Button fx:id="signUpButton" layoutX="45.0" layoutY="310.0" mnemonicParsing="false" onMouseClicked="#signUpButtonClickedToSignUp" prefHeight="25.0" prefWidth="143.0" text="Sign Up">
                <effect>
                   <InnerShadow />
                </effect>
             </Button>
-            <Button fx:id="backButton" layoutX="45.0" layoutY="348.0" mnemonicParsing="false" onMouseClicked="#backButtonClicked" prefHeight="25.0" prefWidth="143.0" text="Back">
+            <TextField fx:id="userName" layoutX="13.0" layoutY="71.0" prefHeight="25.0" prefWidth="210.0" promptText="Username (Must start with a lettter)">
+               <effect>
+                  <InnerShadow />
+               </effect></TextField>
+            <PasswordField fx:id="userPassword" layoutX="13.0" layoutY="127.0" prefHeight="25.0" prefWidth="210.0" promptText="Password (Minimum characters: 6)">
+               <effect>
+                  <InnerShadow />
+               </effect></PasswordField>
+            <PasswordField fx:id="userPasswordAgain" layoutX="13.0" layoutY="182.0" prefHeight="25.0" prefWidth="210.0" promptText="Password (Minimum characters: 6)">
+               <effect>
+                  <InnerShadow />
+               </effect>
+            </PasswordField>
+            <TextField fx:id="userEmail" layoutX="13.0" layoutY="237.0" prefHeight="25.0" prefWidth="210.0" promptText="Email (Must be valid)">
+               <effect>
+                  <InnerShadow />
+               </effect>
+            </TextField>
+            <Button fx:id="backButton" layoutX="45.0" layoutY="348.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="143.0" text="Back">
                <effect>
                   <InnerShadow />
                </effect>
             </Button>
-            <Label fx:id="exitProgram" layoutX="205.0" layoutY="-6.0" onMouseClicked="#handleClose" text="X">
+            <Text fill="#3e96bc" layoutX="13.0" layoutY="41.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Please fill the gaps below." textAlignment="CENTER" wrappingWidth="210.0">
                <font>
-                  <Font size="34.0" />
+                  <Font size="18.0" />
                </font>
-               <textFill>
-                  <LinearGradient endX="1.0" endY="1.0" startX="0.47619047619047616" startY="0.17142857142857146">
-                     <stops>
-                        <Stop color="#3d77e3" />
-                        <Stop color="#3d77e3" offset="0.13793103448275862" />
-                        <Stop color="#bd1357" offset="0.9278350515463916" />
-                        <Stop color="#bd1357" offset="1.0" />
-                     </stops>
-                  </LinearGradient>
-               </textFill>
-            </Label>
+            </Text>
          </children>
          <effect>
             <InnerShadow />

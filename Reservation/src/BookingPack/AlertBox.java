@@ -20,7 +20,7 @@ public class AlertBox {
 
         window.initModality(Modality.APPLICATION_MODAL);
         window.setTitle(title);
-        window.setMinWidth(350);
+        window.setMinWidth(450);
         window.setMinHeight(200);
 
         Button button = new Button();
