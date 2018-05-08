@@ -1,7 +1,7 @@
 package Hotelpack;
 
 public class Hotel {
-    private String[] defaultHotelNamesForIzmir = {"Ramada Plaza ★★★★☆","Ramada Encore ★★★★☆","Best Western Premier ★★★★☆","Wyndham Grand Özdilek ★★★★★","Swissotel Grand Efes ★★★★★","Park Inn by Radisson ★★★★☆","Mövenpick ★★★★★","Buca Residence ★★★☆☆","İbis Otel ★★★☆☆"};
+    private String[] defaultHotelNamesForIzmir = {"Ramada Plaza ★★★★☆","Ramada Encore ★★★★☆","Best Western Premier ★★★★☆","Wyndham Grand Özdilek ★★★★★","Swissotel Grand Efes ★★★★★","Park Inn by Radisson ★★★★☆","Mövenpick ★★★★★","Buca Residence ★★★☆☆","İbis Hotel ★★★☆☆"};
     private String[] defaultHotelNamesForIstanbul = {"Grand Naki ★★★★☆","Levent Hotel ★★★☆☆","Lionel Hotel ★★★★★","Park Dedeman Levent ★★★★☆","Mercia Hotel ★★★★☆","Sheraton Hotel ★★★★★","Grand Ant Hotel ★★★☆☆","Biz Cevahir Hotel ★★★★★","Jazz Hotel ★★★★☆"};
     private String[] defaultHotelNamesForAnkara = {"Point Hotel Ankara ★★★★☆","Hotel Abro Necatibey ★★★☆☆","Hotel İçkale ★★★★★","Bera Ankara ★★★★★","Anemon ★★★★☆","Gür Kent ★★★★☆","Dafne ★★★☆☆","Swissotel ★★★★★","Maltepe 2000 ★★★☆☆"};
     private String[] defaultHotelNamesForAntalya = {"Golden Sun ★★★☆☆","Medusa ★★★☆☆","Ramada Plaza ★★★★★","Throne Sea Gate ★★★★★","Orange Country ★★★★★","Angora Hotel ★★★☆☆","Portakal Bahçesi Hotel ★★★★★","DoubleTree by Hilton ★★★★★","Olea Nova ★★★☆☆"};

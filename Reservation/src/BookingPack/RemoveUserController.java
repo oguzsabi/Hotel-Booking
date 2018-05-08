@@ -43,6 +43,4 @@ public class RemoveUserController implements Initializable {
             memberList.getItems().remove(memberList.getSelectionModel().getSelectedItem());
         }
     }
-
-
 }

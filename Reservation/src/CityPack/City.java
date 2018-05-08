@@ -5,13 +5,15 @@ public class City {
     private String cityName, cityDescription;
     private double cityAltitude;
     private int cityPopulation, annualTouristVisit;
+    /*private double cityAltitude;
+    private int cityPopulation, annualTouristVisit;*/
 
-    public City(){
-        this.cityName = "NO_CITY_NAME_ENTERED";
-        this.cityDescription = "NO_CITY_DESCRIPTION_ENTERED";
+    public City() {
+        this.cityName = null;
+        this.cityDescription = null;
+        this.cityAltitude = 0;
         this.cityPopulation = 1;
         this.annualTouristVisit = 0;
-        this.cityAltitude = 0.0;
     }
 
     public City(String cityName, String cityDescription, double cityAltitude, int cityPopulation, int annualTouristVisit) {

@@ -51,15 +51,15 @@ public class AdminMenuViewController implements AddableScene, RemovableScene {
     }
 
     public void addCityButtonClicked(MouseEvent mouseEvent) throws IOException {
-        removingScene(mouseEvent,"AddCityView.fxml");
+        addingScene(mouseEvent,"AddCityView.fxml");
     }
 
     public void removeHotelButtonClicked(MouseEvent mouseEvent) throws IOException {
-
+        removingScene(mouseEvent,"RemoveHotelView.fxml");
     }
 
     public void addHotelButtonClicked(MouseEvent mouseEvent) throws IOException {
-
+        addingScene(mouseEvent,"AddHotelView.fxml");
     }
 
     @Override

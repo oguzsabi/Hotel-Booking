@@ -48,8 +48,8 @@
             <Text fx:id="annualTouristVisitText" layoutX="332.0" layoutY="253.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
          </children></AnchorPane>
       <ImageView fx:id="cityImage" fitHeight="258.0" fitWidth="417.0" layoutX="504.0" layoutY="272.0" pickOnBounds="true" preserveRatio="true" />
-      <Button fx:id="backButton" layoutX="518.0" layoutY="478.0" mnemonicParsing="false" onMouseClicked="#backButtonClicked" prefHeight="25.0" prefWidth="69.0" text=" &lt;-- Back" />
-      <Button fx:id="nextButton" layoutX="848.0" layoutY="478.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="69.0" text="Next --&gt;" />
+      <Button fx:id="backButton" layoutX="518.0" layoutY="478.0" mnemonicParsing="false" onMouseClicked="#backButtonClicked" prefHeight="25.0" prefWidth="87.0" text="Back" />
+      <Button fx:id="nextButton" layoutX="830.0" layoutY="478.0" mnemonicParsing="false" onMouseClicked="#nextButtonClicked" prefHeight="25.0" prefWidth="87.0" text="Next" />
       <Separator layoutX="504.0" layoutY="264.0" prefHeight="16.0" prefWidth="417.0" />
    </children>
 </AnchorPane>

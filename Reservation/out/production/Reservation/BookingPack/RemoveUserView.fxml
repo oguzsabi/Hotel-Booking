@@ -9,10 +9,7 @@
 
 <AnchorPane prefHeight="337.0" prefWidth="447.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="BookingPack.RemoveUserController">
    <children>
-      <ListView fx:id="memberList" layoutY="23.0" prefHeight="377.0" prefWidth="297.0">
-         <padding>
-            <Insets left="10.0" />
-         </padding></ListView>
+      <ListView fx:id="memberList" layoutY="23.0" prefHeight="377.0" prefWidth="297.0" />
       <Button layoutX="319.0" layoutY="117.0" mnemonicParsing="false" onMouseClicked="#removeButtonClicked" prefHeight="67.0" prefWidth="92.0" text="Remove" />
       <Button layoutX="319.0" layoutY="233.0" mnemonicParsing="false" onMouseClicked="#backButtonClicked" prefHeight="67.0" prefWidth="92.0" text="Back" />
       <Label layoutY="6.0" text="Username">
