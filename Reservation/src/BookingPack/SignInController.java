@@ -17,9 +17,9 @@ import java.util.ResourceBundle;
 public class SignInController implements Initializable {
     @FXML private TextField userName;
     @FXML private PasswordField userPassword;
-    @FXML private Button signInButton, signUpButton, adminSignInButton;
     @FXML private CheckBox rememberMe;
     static boolean fromSignInView = false;
+    private static String usernameString;
 
     public void initialize(URL url, ResourceBundle resourceBundle){
 
@@ -63,6 +63,7 @@ public class SignInController implements Initializable {
             Save.cleaningRememberMeFile();
 
         if(Save.readingMemberList(userName.getText(),userPassword.getText())) {
+            usernameString = userName.getText();
             Parent userMenuParent = FXMLLoader.load(getClass().getResource("CityAndHotelSelectionView.fxml"));
             Scene userMenuScene = new Scene(userMenuParent);
 
@@ -92,5 +93,9 @@ public class SignInController implements Initializable {
             rememberMe.setDisable(true);
         else
             rememberMe.setDisable(false);
+    }
+
+    public static String getUsernameString() {
+        return usernameString;
     }
 }

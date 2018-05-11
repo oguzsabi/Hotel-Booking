@@ -18,22 +18,37 @@
       <VBox layoutX="153.0" layoutY="100.0" prefHeight="125.0" prefWidth="130.0" spacing="15.0">
          <children>
             <Label prefHeight="17.0" prefWidth="131.0" text="User Management" />
-            <Button mnemonicParsing="false" onMouseClicked="#addUserButtonClicked" prefHeight="25.0" prefWidth="110.0" text="Add user" />
-            <Button mnemonicParsing="false" onMouseClicked="#removeUserButtonClicked" prefHeight="25.0" prefWidth="110.0" text="Remove user" />
+            <Button mnemonicParsing="false" onMouseClicked="#addUserButtonClicked" prefHeight="25.0" prefWidth="110.0" text="Add user">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></Button>
+            <Button mnemonicParsing="false" onMouseClicked="#removeUserButtonClicked" prefHeight="25.0" prefWidth="110.0" text="Remove user">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></Button>
          </children>
          <padding>
             <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
          </padding>
       </VBox>
-      <Button fx:id="backButton" layoutX="23.0" layoutY="241.0" mnemonicParsing="false" onMouseClicked="#backButtonClicked" prefHeight="53.0" prefWidth="110.0" text="Back" />
+      <Button layoutX="23.0" layoutY="241.0" mnemonicParsing="false" onMouseClicked="#backButtonClicked" prefHeight="53.0" prefWidth="110.0" text="Back">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></Button>
       <VBox layoutX="13.0" layoutY="100.0" prefHeight="125.0" prefWidth="130.0" spacing="15.0">
          <children>
             <Label prefHeight="17.0" prefWidth="109.0" text="Hotel Management" />
-            <Button mnemonicParsing="false" onMouseClicked="#addHotelButtonClicked" prefHeight="25.0" prefWidth="110.0" text="Add hotel" />
+            <Button mnemonicParsing="false" onMouseClicked="#addHotelButtonClicked" prefHeight="25.0" prefWidth="110.0" text="Add hotel">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></Button>
             <Button mnemonicParsing="false" onMouseClicked="#removeHotelButtonClicked" prefHeight="25.0" prefWidth="110.0" text="Remove hotel">
                <VBox.margin>
                   <Insets />
                </VBox.margin>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
             </Button>
          </children>
          <padding>
@@ -43,16 +58,26 @@
       <VBox layoutX="292.0" layoutY="100.0" prefHeight="125.0" prefWidth="130.0" spacing="15.0">
          <children>
             <Label prefHeight="17.0" prefWidth="110.0" text="City Management" />
-            <Button mnemonicParsing="false" onMouseClicked="#addCityButtonClicked" prefHeight="25.0" prefWidth="110.0" text="Add city" />
+            <Button mnemonicParsing="false" onMouseClicked="#addCityButtonClicked" prefHeight="25.0" prefWidth="110.0" text="Add city">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></Button>
             <Button mnemonicParsing="false" onMouseClicked="#removeCityButtonClicked" prefHeight="25.0" prefWidth="110.0" text="Remove city">
                <VBox.margin>
                   <Insets />
                </VBox.margin>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
             </Button>
          </children>
          <padding>
             <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
          </padding>
       </VBox>
+      <Button layoutX="302.0" layoutY="241.0" mnemonicParsing="false" onMouseClicked="#adminManualButtonClicked" prefHeight="53.0" prefWidth="110.0" text="Admin Manual">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></Button>
    </children>
 </AnchorPane>

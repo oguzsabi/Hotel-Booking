@@ -9,7 +9,10 @@
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="BookingPack.AddHotelController">
    <children>
-      <ListView fx:id="hotelList" layoutY="25.0" prefHeight="375.0" prefWidth="200.0" />
+      <ListView fx:id="hotelList" layoutY="25.0" prefHeight="375.0" prefWidth="200.0">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></ListView>
       <Label layoutX="3.0" layoutY="4.0" text="Please choose a city to add a hotel." />
       <TabPane layoutX="200.0" prefHeight="400.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
@@ -17,11 +20,26 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="230.0" prefWidth="200.0">
                      <children>
-                        <TextField fx:id="hotelNameText" layoutX="12.0" layoutY="34.0" />
-                        <TextField fx:id="hotelNumberOfStarsText" layoutX="11.0" layoutY="94.0" onKeyReleased="#keyReleased" />
-                        <TextField fx:id="hotelNumberOfRoomsText" layoutX="12.0" layoutY="158.0" />
-                        <TextField fx:id="hotelNightlyCostText" layoutX="12.0" layoutY="219.0" />
-                        <TextField fx:id="hotelYearOfBuiltText" layoutX="11.0" layoutY="283.0" />
+                        <TextField fx:id="hotelNameText" layoutX="12.0" layoutY="34.0">
+                           <cursor>
+                              <Cursor fx:constant="TEXT" />
+                           </cursor></TextField>
+                        <TextField fx:id="hotelNumberOfStarsText" layoutX="11.0" layoutY="94.0" onKeyReleased="#keyReleased">
+                           <cursor>
+                              <Cursor fx:constant="TEXT" />
+                           </cursor></TextField>
+                        <TextField fx:id="hotelNumberOfRoomsText" layoutX="12.0" layoutY="158.0">
+                           <cursor>
+                              <Cursor fx:constant="TEXT" />
+                           </cursor></TextField>
+                        <TextField fx:id="hotelNightlyCostText" layoutX="12.0" layoutY="219.0">
+                           <cursor>
+                              <Cursor fx:constant="TEXT" />
+                           </cursor></TextField>
+                        <TextField fx:id="hotelYearOfBuiltText" layoutX="11.0" layoutY="283.0">
+                           <cursor>
+                              <Cursor fx:constant="TEXT" />
+                           </cursor></TextField>
                         <Label layoutX="10.0" layoutY="202.0" text="Nightly Cost (Cheapest)(₺)" />
                         <Label layoutX="9.0" layoutY="266.0" text="Year of Built" />
                         <Label layoutX="11.0" layoutY="141.0" text="Number of Rooms" />
@@ -35,12 +53,30 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <TextField fx:id="hotelSingleRoomPriceText" layoutX="12.0" layoutY="34.0" />
-                        <TextField fx:id="hotelDoubleRoomPriceText" layoutX="12.0" layoutY="88.0" />
-                        <TextField fx:id="hotelTripleRoomPriceText" layoutX="12.0" layoutY="142.0" />
-                        <TextField fx:id="hotelQuadRoomPriceText" layoutX="12.0" layoutY="193.0" />
-                        <TextField fx:id="hotelQueenRoomPriceText" layoutX="12.0" layoutY="246.0" />
-                        <TextField fx:id="hotelKingRoomPriceText" layoutX="12.0" layoutY="298.0" />
+                        <TextField fx:id="hotelSingleRoomPriceText" layoutX="12.0" layoutY="34.0">
+                           <cursor>
+                              <Cursor fx:constant="TEXT" />
+                           </cursor></TextField>
+                        <TextField fx:id="hotelDoubleRoomPriceText" layoutX="12.0" layoutY="88.0">
+                           <cursor>
+                              <Cursor fx:constant="TEXT" />
+                           </cursor></TextField>
+                        <TextField fx:id="hotelTripleRoomPriceText" layoutX="12.0" layoutY="142.0">
+                           <cursor>
+                              <Cursor fx:constant="TEXT" />
+                           </cursor></TextField>
+                        <TextField fx:id="hotelQuadRoomPriceText" layoutX="12.0" layoutY="193.0">
+                           <cursor>
+                              <Cursor fx:constant="TEXT" />
+                           </cursor></TextField>
+                        <TextField fx:id="hotelQueenRoomPriceText" layoutX="12.0" layoutY="246.0">
+                           <cursor>
+                              <Cursor fx:constant="TEXT" />
+                           </cursor></TextField>
+                        <TextField fx:id="hotelKingRoomPriceText" layoutX="12.0" layoutY="298.0">
+                           <cursor>
+                              <Cursor fx:constant="TEXT" />
+                           </cursor></TextField>
                         <Label layoutX="12.0" layoutY="71.0" text="Price of a Double Room" />
                         <Label layoutX="12.0" layoutY="17.0" text="Price of a Single Room" />
                         <Label layoutX="12.0" layoutY="125.0" text="Price of a Triple Room" />
@@ -58,15 +94,24 @@
           </Tab>
         </tabs>
       </TabPane>
-      <TextArea fx:id="hotelDescriptionText" layoutX="400.0" layoutY="63.0" prefHeight="200.0" prefWidth="200.0" />
+      <TextArea fx:id="hotelDescriptionText" layoutX="400.0" layoutY="63.0" prefHeight="200.0" prefWidth="200.0">
+         <cursor>
+            <Cursor fx:constant="TEXT" />
+         </cursor></TextArea>
       <Label layoutX="400.0" layoutY="46.0" text="Hotel Desricption" />
       <Text layoutX="416.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Please fill all the spaces." underline="true">
          <font>
             <Font size="16.0" />
          </font>
       </Text>
-      <Button layoutX="422.0" layoutY="277.0" mnemonicParsing="false" onMouseClicked="#submitButtonClicked" prefHeight="48.0" prefWidth="147.0" text="Submit" />
-      <Button layoutX="422.0" layoutY="338.0" mnemonicParsing="false" onMouseClicked="#backButtonClicked" prefHeight="48.0" prefWidth="147.0" text="Back" />
+      <Button layoutX="422.0" layoutY="277.0" mnemonicParsing="false" onMouseClicked="#submitButtonClicked" prefHeight="48.0" prefWidth="147.0" text="Submit">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></Button>
+      <Button layoutX="422.0" layoutY="338.0" mnemonicParsing="false" onMouseClicked="#backButtonClicked" prefHeight="48.0" prefWidth="147.0" text="Back">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></Button>
       <Separator layoutX="398.0" orientation="VERTICAL" prefHeight="400.0" prefWidth="6.0" />
       <Separator layoutX="197.0" orientation="VERTICAL" prefHeight="400.0" prefWidth="0.0" />
    </children>

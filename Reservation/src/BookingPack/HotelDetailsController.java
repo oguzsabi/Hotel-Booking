@@ -40,6 +40,10 @@ public class HotelDetailsController implements Initializable{
     private SimpleDateFormat myFormat = new SimpleDateFormat("dd MM yyyy");
     private String checkInDateString;
     private String checkOutDateString;
+    private static long totalDays;
+    private static String from;
+    private static String to;
+    private static long priceTag;
 
     public void initialize(URL url, ResourceBundle resourceBundle){
         singleRoomRadioButton.setToggleGroup(toggleGroup);
@@ -48,7 +52,7 @@ public class HotelDetailsController implements Initializable{
         quadRoomRadioButton.setToggleGroup(toggleGroup);
         queenRoomRadioButton.setToggleGroup(toggleGroup);
         kingRoomRadioButton.setToggleGroup(toggleGroup);
-        hotelNameText.setText(CityAndHotelSelectionController.getSelectedHotelName());
+        hotelNameText.setText(CityAndHotelSelectionController.getHotelValue());
         hotelDescriptionText.setText(CityAndHotelSelectionController.getDescriptionOfTheHotel());
         hotelStarCounting();
         if(starCounter<=3){
@@ -125,79 +129,92 @@ public class HotelDetailsController implements Initializable{
         window.show();
     }
 
-    public void toThePaymentButtonClicked(MouseEvent mouseEvent){
+    public void toThePaymentButtonClicked(MouseEvent mouseEvent) throws IOException{
+        priceTag = roomTypeChecker();
         if(starCounter>3) {
             if (singleRoomRadioButton.isSelected() || doubleRoomRadioButton.isSelected() || tripleRoomRadioButton.isSelected() || quadRoomRadioButton.isSelected() || queenRoomRadioButton.isSelected() || kingRoomRadioButton.isSelected()) {
-                checkInAndTodayChecker();
+                if(checkInAndTodayChecker() && checkInAndCheckOutChecker()){
+                    from = checkInDate.getEditor().getText();
+                    to = checkOutDate.getEditor().getText();
+                    totalDaysCalculator();
+                    Parent signInParent = FXMLLoader.load(getClass().getResource("PaymentView.fxml"));
+                    Scene signInScene = new Scene(signInParent);
+
+                    Stage window = (Stage)((Node)mouseEvent.getSource()).getScene().getWindow();
+                    window.setScene(signInScene);
+                    window.show();
+                }
             }
         }
         else{
             if (singleRoomRadioButton.isSelected() || doubleRoomRadioButton.isSelected() || tripleRoomRadioButton.isSelected()) {
-                checkInAndTodayChecker();
+                if(checkInAndTodayChecker() && checkInAndCheckOutChecker()){
+                    from = checkInDate.getEditor().getText();
+                    to = checkOutDate.getEditor().getText();
+                    totalDaysCalculator();
+                    Parent signInParent = FXMLLoader.load(getClass().getResource("PaymentView.fxml"));
+                    Scene signInScene = new Scene(signInParent);
+
+                    Stage window = (Stage)((Node)mouseEvent.getSource()).getScene().getWindow();
+                    window.setScene(signInScene);
+                    window.show();
+                }
             }
         }
     }
 
-    public void checkInAndTodayChecker(){
+    public boolean checkInAndTodayChecker(){
         String dateString = today.toInstant().toString();
         if(checkInDate.getEditor().getText().length()>0 && checkOutDate.getEditor().getText().length()>0) {
             if(Integer.parseInt(checkInDate.getEditor().getText().substring(6, 10)) == Integer.parseInt(dateString.substring(0,4))) {
                 if(Integer.parseInt(checkInDate.getEditor().getText().substring(4, 5)) == Integer.parseInt(dateString.substring(5,7))) {
                     if(Integer.parseInt(checkInDate.getEditor().getText().substring(0, 2)) == Integer.parseInt(dateString.substring(8,10))) {
-                        if(Integer.parseInt(dateString.substring(11,13))<12){
-                            checkInAndCheckOutChecker();
+                        if(Integer.parseInt(dateString.substring(11,13))+3<12){
+                            return true;
                         }
                         else
-                            AlertBox.display("Reservation Time Error!","You cannot make a reservation for today 12 p.m.!");
+                            AlertBox.display("Reservation Time Error!","You cannot make a reservation for today after 12 p.m.!");
                     }
                     else if(Integer.parseInt(checkInDate.getEditor().getText().substring(0, 2)) > Integer.parseInt(dateString.substring(8,10))){
-                        checkInAndCheckOutChecker();
+                        return true;
                     }
                     else
                         AlertBox.display("Check-In Date Error!","Your check-in date cannot be before today's date!");
                 }
                 else if(Integer.parseInt(checkInDate.getEditor().getText().substring(4, 5)) > Integer.parseInt(dateString.substring(5,7))){
-                    checkInAndCheckOutChecker();
+                    return true;
                 }
                 else
                     AlertBox.display("Check-In Date Error!","Your check-in date cannot be before today's date!");
             }
             else if(Integer.parseInt(checkInDate.getEditor().getText().substring(6, 10)) > Integer.parseInt(dateString.substring(0,4))){
-                checkInAndCheckOutChecker();
+                return true;
             }
             else
                 AlertBox.display("Check-In Date Error!","Your check-in date cannot be before today's date!");
         }
         else
             AlertBox.display("Date Pick Error!","You must pick your dates first!");
+        return false;
     }
 
-    public void checkInAndCheckOutChecker(){
+    public boolean checkInAndCheckOutChecker(){
         if (Integer.parseInt(checkInDate.getEditor().getText().substring(6, 10)) == Integer.parseInt(checkOutDate.getEditor().getText().substring(6, 10))) {
             if (Integer.parseInt(checkInDate.getEditor().getText().substring(4, 5)) == Integer.parseInt(checkOutDate.getEditor().getText().substring(4, 5))) {
                 if (Integer.parseInt(checkInDate.getEditor().getText().substring(0, 2)) < Integer.parseInt(checkOutDate.getEditor().getText().substring(0, 2))) {
-                    System.out.println("2. Your dates are correct!");
-                    checkInDateString = Integer.parseInt(checkInDate.getEditor().getText().substring(0, 2)) + " " + Integer.parseInt(checkInDate.getEditor().getText().substring(4, 5)) + " " + Integer.parseInt(checkInDate.getEditor().getText().substring(6, 10));
-                    checkOutDateString = Integer.parseInt(checkOutDate.getEditor().getText().substring(0, 2)) + " " + Integer.parseInt(checkOutDate.getEditor().getText().substring(4, 5)) + " " + Integer.parseInt(checkOutDate.getEditor().getText().substring(6, 10));
-                    try {
-                        Date date1 = myFormat.parse(checkInDateString);
-                        Date date2 = myFormat.parse(checkOutDateString);
-                        long diff = date2.getTime() - date1.getTime();
-                        System.out.println ("Days: " + TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS));
-                    } catch (ParseException e) {
-                        e.printStackTrace();
-                    }
+                    return true;
                 } else
                     AlertBox.display("Date Pick Day Error!", "Check-out day cannot be in the same day with check-in!");
             } else if (Integer.parseInt(checkInDate.getEditor().getText().substring(4, 5)) < Integer.parseInt(checkOutDate.getEditor().getText().substring(4, 5))) {
-                System.out.println("1. Your dates are correct!");
+                return true;
             } else
                 AlertBox.display("Date Pick Month Error!", "Check-out month cannot be before check-in month!");
 
         } else if (Integer.parseInt(checkInDate.getEditor().getText().substring(6, 10)) < Integer.parseInt(checkOutDate.getEditor().getText().substring(6, 10))) {
-            System.out.println("3. Your dates are correct!");
+            return true;
         } else
             AlertBox.display("Date Pick Year Error!", "Check-out year cannot be before check-in year!");
+        return false;
     }
 
     public void hotelStarCounting(){
@@ -207,5 +224,55 @@ public class HotelDetailsController implements Initializable{
                 starCounter++;
             }
         }
+    }
+
+    public void totalDaysCalculator(){
+        checkInDateString = Integer.parseInt(checkInDate.getEditor().getText().substring(0, 2)) + " " + Integer.parseInt(checkInDate.getEditor().getText().substring(4, 5)) + " " + Integer.parseInt(checkInDate.getEditor().getText().substring(6, 10));
+        checkOutDateString = Integer.parseInt(checkOutDate.getEditor().getText().substring(0, 2)) + " " + Integer.parseInt(checkOutDate.getEditor().getText().substring(4, 5)) + " " + Integer.parseInt(checkOutDate.getEditor().getText().substring(6, 10));
+        try {
+            Date date1 = myFormat.parse(checkInDateString);
+            Date date2 = myFormat.parse(checkOutDateString);
+            totalDays = date2.getTime() - date1.getTime();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public int roomTypeChecker(){
+        if(singleRoomRadioButton.isSelected()){
+            return Integer.parseInt(singleRoomRadioButton.getText().substring(13,singleRoomRadioButton.getText().length()-2));
+        }
+        if(doubleRoomRadioButton.isSelected()){
+            return Integer.parseInt(doubleRoomRadioButton.getText().substring(13,doubleRoomRadioButton.getText().length()-2));
+        }
+        if(tripleRoomRadioButton.isSelected()){
+            return Integer.parseInt(tripleRoomRadioButton.getText().substring(13,tripleRoomRadioButton.getText().length()-2));
+        }
+        if(quadRoomRadioButton.isSelected()){
+            return Integer.parseInt(quadRoomRadioButton.getText().substring(11,quadRoomRadioButton.getText().length()-2));
+        }
+        if(queenRoomRadioButton.isSelected()){
+            return Integer.parseInt(queenRoomRadioButton.getText().substring(12,queenRoomRadioButton.getText().length()-2));
+        }
+        if(kingRoomRadioButton.isSelected()){
+            return Integer.parseInt(kingRoomRadioButton.getText().substring(11,kingRoomRadioButton.getText().length()-2));
+        }
+        return 0;
+    }
+
+    public static long getPriceTag() {
+        return priceTag;
+    }
+
+    public static long getTotalDays() {
+        return totalDays;
+    }
+
+    public static String getFrom() {
+        return from;
+    }
+
+    public static String getToo() {
+        return to;
     }
 }

@@ -32,7 +32,10 @@
                 <Button fx:id="signInButton" alignment="CENTER" layoutX="42.0" layoutY="245.0" mnemonicParsing="false" onMouseClicked="#signInButtonClicked" prefHeight="25.0" prefWidth="143.0" text="Sign In" textAlignment="CENTER">
                <effect>
                   <InnerShadow />
-               </effect></Button>
+               </effect>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></Button>
             <Label layoutX="68.0" layoutY="14.0" text="Sign In" textAlignment="CENTER" textFill="#8697e1">
                <font>
                   <Font name="Segoe UI Semibold" size="30.0" />
@@ -44,25 +47,40 @@
                 <TextField fx:id="userName" layoutX="13.0" layoutY="71.0" onKeyReleased="#keyReleased" prefHeight="25.0" prefWidth="210.0" promptText="Username">
                <effect>
                   <InnerShadow />
-               </effect></TextField>
+               </effect>
+               <cursor>
+                  <Cursor fx:constant="TEXT" />
+               </cursor></TextField>
                 <PasswordField fx:id="userPassword" layoutX="13.0" layoutY="127.0" onKeyReleased="#keyReleased" prefHeight="25.0" prefWidth="210.0" promptText="Password">
                <effect>
                   <InnerShadow />
-               </effect></PasswordField>
+               </effect>
+               <cursor>
+                  <Cursor fx:constant="TEXT" />
+               </cursor></PasswordField>
                 <CheckBox fx:id="rememberMe" layoutX="13.0" layoutY="184.0" mnemonicParsing="false" text="Remember Me">
                <effect>
                   <InnerShadow />
-               </effect></CheckBox>
+               </effect>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></CheckBox>
             <Button fx:id="adminSignInButton" layoutX="42.0" layoutY="286.0" mnemonicParsing="false" onMouseClicked="#adminSignInButtonClicked" prefHeight="25.0" prefWidth="143.0" text="Admin Sign In">
                <effect>
                   <InnerShadow />
                </effect>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
             </Button>
                 <Separator layoutX="1.0" layoutY="333.0" prefHeight="0.0" prefWidth="231.0" style="-fx-background-color: white;" />
             <Button fx:id="signUpButton" layoutX="42.0" layoutY="356.0" mnemonicParsing="false" onMouseClicked="#signUpButtonClicked" prefHeight="25.0" prefWidth="143.0" text="Sign Up">
                <effect>
                   <InnerShadow />
                </effect>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
             </Button>
             </children>
          <effect>

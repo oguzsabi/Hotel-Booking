@@ -13,6 +13,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
@@ -32,7 +33,6 @@ public class CityAndHotelSelectionController implements Initializable {
     @FXML private ListView<String> hotelListForAllCities = new ListView<>();
     @FXML private Text cityOrHotelDescription;
     @FXML private Label cityOrHotelName;
-    @FXML private ImageView cityImage;
     @FXML private AnchorPane descriptionAndImagePane;
     @FXML private Button nextButton;
     @FXML private Text cityPopulationText;
@@ -41,6 +41,7 @@ public class CityAndHotelSelectionController implements Initializable {
     @FXML private Text hotelRoomAmountOrCityPopulationText;
     @FXML private Text yearOfBuiltOrCityAltitudeText;
     @FXML private Text nightlyCostOrAnnualTouristVisitText;
+    @FXML private Label priceWarning;
 
     static private String selectedHotelName;
     static private String descriptionOfTheHotel;
@@ -88,10 +89,18 @@ public class CityAndHotelSelectionController implements Initializable {
                 AlertBox.display("Hotel Selection Error!","You must select a hotel to continue!");
     }
 
+    public void myReservationsButtonClicked(MouseEvent mouseEvent) throws IOException{
+        Parent signInParent = FXMLLoader.load(getClass().getResource("MyReservationsView.fxml"));
+        Scene signInScene = new Scene(signInParent);
+
+        Stage window = (Stage)((Node)mouseEvent.getSource()).getScene().getWindow();
+        window.setScene(signInScene);
+        window.show();
+    }
+
     public void initialize(URL url, ResourceBundle resourceBundle){
         cityNames.add(0, new Izmir()); cityNames.add(1, new Istanbul()); cityNames.add(2, new Ankara()); cityNames.add(3, new Antalya());
-        cityNames.add(4, new Gaziantep()); cityNames.add(5, new Bursa()); cityNames.add(6, new Canakkale()); cityNames.add(7, new Denizli());
-        cityNames.add(8, new Edirne());
+        cityNames.add(4, new Gaziantep()); cityNames.add(5, new Bursa()); cityNames.add(6, new Canakkale()); cityNames.add(7, new Edirne());
 
         removeCityController = new RemoveCityController();
         cityObservableList.addAll(cityObject.getDefaultCityNames());
@@ -100,12 +109,14 @@ public class CityAndHotelSelectionController implements Initializable {
         nextButton.setDisable(true);
         cityList.getSelectionModel().selectedItemProperty().addListener((v, oldValue, newCityValue) -> citySelectionManager(newCityValue));
         cityList.getSelectionModel().selectFirst();
+        priceWarning.setVisible(false);
         descriptionAndImagePane.setVisible(false);
         hotelListForAllCities.setVisible(false);
         hotelListForAllCities.getSelectionModel().selectedItemProperty().addListener((v, oldValue, newHotelValue) -> hotelSelectionManager(newHotelValue));
     }
 
     public void citySelectionManager(String newCityValue){
+        priceWarning.setVisible(false);
         nextButton.setDisable(false);
         cityValue = newCityValue;
         cityOrHotelName.setText(newCityValue);
@@ -230,10 +241,10 @@ public class CityAndHotelSelectionController implements Initializable {
         if(cityValue.equals("Edirne")){
             selectedCityName = "Edirne";
             cityOrHotelName.setText(newCityValue);
-            cityOrHotelDescription.setText(cityNames.get(8).cityDescription()); //Run-time polymorphism is used here.
-            cityPopulationText.setText(numberFormat.format(cityNames.get(8).getCityPopulation()));
-            cityAltitudeText.setText(numberFormat.format(cityNames.get(8).getCityAltitude()));
-            annualTouristVisitText.setText(numberFormat.format(cityNames.get(8).getAnnualTouristVisit()));
+            cityOrHotelDescription.setText(cityNames.get(7).cityDescription()); //Run-time polymorphism is used here.
+            cityPopulationText.setText(numberFormat.format(cityNames.get(7).getCityPopulation()));
+            cityAltitudeText.setText(numberFormat.format(cityNames.get(7).getCityAltitude()));
+            annualTouristVisitText.setText(numberFormat.format(cityNames.get(7).getAnnualTouristVisit()));
             descriptionAndImagePane.setVisible(true);
             hotelObservableList.addAll(hotelObject.getDefaultHotelNamesForEdirne());
             hotelListForAllCities.setItems(hotelObservableList);
@@ -242,10 +253,6 @@ public class CityAndHotelSelectionController implements Initializable {
             hotelObservableList.remove(0);
             hotelListForAllCities.setVisible(true);
         }
-    }
-
-    public void imageClicked(MouseEvent mouseEvent){
-        cityImage.getImage();
     }
 
     public static String getSelectedHotelName() {
@@ -265,6 +272,7 @@ public class CityAndHotelSelectionController implements Initializable {
     }
 
     public void hotelSelectionManager(String newHotelValue){
+        priceWarning.setVisible(true);
         hotelValue = newHotelValue;
         hotelRoomAmountOrCityPopulationText.setText("Number of Rooms");
         yearOfBuiltOrCityAltitudeText.setText("Year of Built");
@@ -287,10 +295,7 @@ public class CityAndHotelSelectionController implements Initializable {
 
             selectedHotelName = "Wyndham Grand Özdilek";
             cityOrHotelName.setText(selectedHotelName);
-            cityOrHotelDescription.setText("Ramada Plaza İzmir; İzmir, Kahramanlar bölgesinde hizmet vermektedir. Tesis Adnan Menderes Havalimanına 26 km, İzmir Otogarına 7 km, şehir merkezine 2 km uzaklıktadır.\n" +
-                    "Tesis, güler yüzlü personeli ve hizmet anlayışı ile misafirlerine konforlu bir konaklama imkanı sunuyor. \n" +
-                    "Tesisin kalite ve konforu bir araya getiren odalarında; kasa, LCD TV, uydu yayını, minibar ve çay-kahve makinesi bulunuyor.\n" +
-                    "Bagaj muhafazası ve 24 saat açık resepsiyon tesisin diğer olanakları arasında yer alıyor.");
+            cityOrHotelDescription.setText("Wyndham Grand İzmir Ozdilek is noted for its proximity to major attractions such as military museum ship, restaurants, marina, entertainment and shopping centers. Qualitasspa İzmir Agamemnon Thermal & Wellness Center has free use of the outdoor pool, indoor, jacuzzi, sauna, Turkish bath, aroma therapy, steam rooms and fitness center for its guests.");
             cityPopulationText.setText("219");
             cityAltitudeText.setText("2002");
             annualTouristVisitText.setText("301₺");
@@ -336,10 +341,7 @@ public class CityAndHotelSelectionController implements Initializable {
 
             selectedHotelName = "Park Inn by Radisson";
             cityOrHotelName.setText(selectedHotelName);
-            cityOrHotelDescription.setText("Ramada Plaza İzmir; İzmir, Kahramanlar bölgesinde hizmet vermektedir. Tesis Adnan Menderes Havalimanına 26 km, İzmir Otogarına 7 km, şehir merkezine 2 km uzaklıktadır.\n" +
-                    "Tesis, güler yüzlü personeli ve hizmet anlayışı ile misafirlerine konforlu bir konaklama imkanı sunuyor. \n" +
-                    "Tesisin kalite ve konforu bir araya getiren odalarında; kasa, LCD TV, uydu yayını, minibar ve çay-kahve makinesi bulunuyor.\n" +
-                    "Bagaj muhafazası ve 24 saat açık resepsiyon tesisin diğer olanakları arasında yer alıyor.");
+            cityOrHotelDescription.setText("Park Inn by Radisson Izmir is designed in every detail and meticulously modern style, in the heart of Izmir, within walking distance of the city's business, cultural and entertainment centers. The hotel has indoor parking and a gym for guests' use.");
             cityPopulationText.setText("137");
             cityAltitudeText.setText("2016");
             annualTouristVisitText.setText("236₺");
@@ -351,10 +353,7 @@ public class CityAndHotelSelectionController implements Initializable {
 
             selectedHotelName = "Mövenpick";
             cityOrHotelName.setText(selectedHotelName);
-            cityOrHotelDescription.setText("Ramada Plaza İzmir; İzmir, Kahramanlar bölgesinde hizmet vermektedir. Tesis Adnan Menderes Havalimanına 26 km, İzmir Otogarına 7 km, şehir merkezine 2 km uzaklıktadır.\n" +
-                    "Tesis, güler yüzlü personeli ve hizmet anlayışı ile misafirlerine konforlu bir konaklama imkanı sunuyor. \n" +
-                    "Tesisin kalite ve konforu bir araya getiren odalarında; kasa, LCD TV, uydu yayını, minibar ve çay-kahve makinesi bulunuyor.\n" +
-                    "Bagaj muhafazası ve 24 saat açık resepsiyon tesisin diğer olanakları arasında yer alıyor.");
+            cityOrHotelDescription.setText("2011 and by the World Travel Awards 2014, \"Turkey's Leading Business Hotel\" in selected and Green Globe certificate in the Mövenpick Hotel Izmir city center, within walking distance to business and shopping centers and fairgrounds, is a 5 star hotel.");
             cityPopulationText.setText("185");
             cityAltitudeText.setText("2008");
             annualTouristVisitText.setText("314₺");
@@ -390,10 +389,7 @@ public class CityAndHotelSelectionController implements Initializable {
 
             selectedHotelName = "Grand Naki";
             cityOrHotelName.setText(selectedHotelName);
-            cityOrHotelDescription.setText("Ramada Plaza İzmir; İzmir, Kahramanlar bölgesinde hizmet vermektedir. Tesis Adnan Menderes Havalimanına 26 km, İzmir Otogarına 7 km, şehir merkezine 2 km uzaklıktadır.\n" +
-                    "Tesis, güler yüzlü personeli ve hizmet anlayışı ile misafirlerine konforlu bir konaklama imkanı sunuyor. \n" +
-                    "Tesisin kalite ve konforu bir araya getiren odalarında; kasa, LCD TV, uydu yayını, minibar ve çay-kahve makinesi bulunuyor.\n" +
-                    "Bagaj muhafazası ve 24 saat açık resepsiyon tesisin diğer olanakları arasında yer alıyor.");
+            cityOrHotelDescription.setText("Our hotel is only a few minutes walk from the historic center of Istanbul (Sultanahmet) where Topkapi Palace, Hagia Sophia Museum, Grand Bazaar, Yerebatan Palace, Hipodrum are located. Sound and heat-insulated windows, minibar, tea-coffee kettle with local foreign TV phone, wireless high-speed internet connection, electronic safe, telephone and hair dryer in bathroom.");
             cityPopulationText.setText("26");
             cityAltitudeText.setText("2014");
             annualTouristVisitText.setText("399₺");
@@ -404,10 +400,7 @@ public class CityAndHotelSelectionController implements Initializable {
 
             selectedHotelName = "Levent Hotel";
             cityOrHotelName.setText(selectedHotelName);
-            cityOrHotelDescription.setText("Ramada Plaza İzmir; İzmir, Kahramanlar bölgesinde hizmet vermektedir. Tesis Adnan Menderes Havalimanına 26 km, İzmir Otogarına 7 km, şehir merkezine 2 km uzaklıktadır.\n" +
-                    "Tesis, güler yüzlü personeli ve hizmet anlayışı ile misafirlerine konforlu bir konaklama imkanı sunuyor. \n" +
-                    "Tesisin kalite ve konforu bir araya getiren odalarında; kasa, LCD TV, uydu yayını, minibar ve çay-kahve makinesi bulunuyor.\n" +
-                    "Bagaj muhafazası ve 24 saat açık resepsiyon tesisin diğer olanakları arasında yer alıyor.");
+            cityOrHotelDescription.setText("All rooms have direct telephone, minibar, tv, central air conditioning, shower, bathtub, wc, hair dryer, toilet phone, fire alarm system, sound and heat proof windows. There is a 24 hour multilingual newspaper There are central air conditioning and heating, tv, wireless internet, cafe, ironing, dry cleaning, safe box, 24 hour room service, generator, services are available. The hotel also offers breakfast room, service and Turkish and International cuisine.");
             cityPopulationText.setText("51");
             cityAltitudeText.setText("2000");
             annualTouristVisitText.setText("276₺");
@@ -418,10 +411,7 @@ public class CityAndHotelSelectionController implements Initializable {
 
             selectedHotelName = "Lionel Hotel";
             cityOrHotelName.setText(selectedHotelName);
-            cityOrHotelDescription.setText("Ramada Plaza İzmir; İzmir, Kahramanlar bölgesinde hizmet vermektedir. Tesis Adnan Menderes Havalimanına 26 km, İzmir Otogarına 7 km, şehir merkezine 2 km uzaklıktadır.\n" +
-                    "Tesis, güler yüzlü personeli ve hizmet anlayışı ile misafirlerine konforlu bir konaklama imkanı sunuyor. \n" +
-                    "Tesisin kalite ve konforu bir araya getiren odalarında; kasa, LCD TV, uydu yayını, minibar ve çay-kahve makinesi bulunuyor.\n" +
-                    "Bagaj muhafazası ve 24 saat açık resepsiyon tesisin diğer olanakları arasında yer alıyor.");
+            cityOrHotelDescription.setText("LIONEL HOTEL ISTANBUL BAYRAMPASA is a 5-star hotel located in the Bayrampaşa district of the city of Istanbul. Ataturk Airport is 10 km away, Forum istanbul Avm 2 km, Axsis Avm 2 km away. The warm, sincere service conception, which is thought to the finest detail of every detail, makes its guests feel comfortable with its modern and stylish decoration.");
             cityPopulationText.setText("230");
             cityAltitudeText.setText("2012");
             annualTouristVisitText.setText("385₺");
@@ -467,10 +457,7 @@ public class CityAndHotelSelectionController implements Initializable {
 
             selectedHotelName = "Grand Ant Hotel";
             cityOrHotelName.setText(selectedHotelName);
-            cityOrHotelDescription.setText("Ramada Plaza İzmir; İzmir, Kahramanlar bölgesinde hizmet vermektedir. Tesis Adnan Menderes Havalimanına 26 km, İzmir Otogarına 7 km, şehir merkezine 2 km uzaklıktadır.\n" +
-                    "Tesis, güler yüzlü personeli ve hizmet anlayışı ile misafirlerine konforlu bir konaklama imkanı sunuyor. \n" +
-                    "Tesisin kalite ve konforu bir araya getiren odalarında; kasa, LCD TV, uydu yayını, minibar ve çay-kahve makinesi bulunuyor.\n" +
-                    "Bagaj muhafazası ve 24 saat açık resepsiyon tesisin diğer olanakları arasında yer alıyor.");
+            cityOrHotelDescription.setText("All rooms have direct telephone, minibar, tv, central air conditioning, shower, bathtub, wc, hair dryer, toilet phone, fire alarm system, sound and heat proof windows. There is a 24 hour multilingual newspaper There are central air conditioning and heating, tv, wireless internet, cafe, ironing, dry cleaning, safe box, 24 hour room service, generator, services are available. The hotel also offers breakfast room, service and Turkish and International cuisine.");
             cityPopulationText.setText("74");
             cityAltitudeText.setText("1990");
             annualTouristVisitText.setText("250₺");
@@ -481,10 +468,7 @@ public class CityAndHotelSelectionController implements Initializable {
 
             selectedHotelName = "Biz Cevahir Hotel";
             cityOrHotelName.setText(selectedHotelName);
-            cityOrHotelDescription.setText("Ramada Plaza İzmir; İzmir, Kahramanlar bölgesinde hizmet vermektedir. Tesis Adnan Menderes Havalimanına 26 km, İzmir Otogarına 7 km, şehir merkezine 2 km uzaklıktadır.\n" +
-                    "Tesis, güler yüzlü personeli ve hizmet anlayışı ile misafirlerine konforlu bir konaklama imkanı sunuyor. \n" +
-                    "Tesisin kalite ve konforu bir araya getiren odalarında; kasa, LCD TV, uydu yayını, minibar ve çay-kahve makinesi bulunuyor.\n" +
-                    "Bagaj muhafazası ve 24 saat açık resepsiyon tesisin diğer olanakları arasında yer alıyor.");
+            cityOrHotelDescription.setText("We have a total of 104 rooms spread over 9 floors, with our convenient meeting rooms, indoor swimming pool, sauna, Turkish bath, massage rooms and sports center and our special SPA and Zeytinaylı Restaurant offering excellent examples of Mediterranean cuisine. Each of our Superior, Deluxe and Suites suites are thoughtfully designed for your comfort, with a tastefully furnished, perfectionist approach hidden in detail.");
             cityPopulationText.setText("104");
             cityAltitudeText.setText("2013");
             annualTouristVisitText.setText("473₺");
@@ -528,10 +512,7 @@ public class CityAndHotelSelectionController implements Initializable {
 
             selectedHotelName = "Hotel İçkale";
             cityOrHotelName.setText(selectedHotelName);
-            cityOrHotelDescription.setText("Ramada Plaza İzmir; İzmir, Kahramanlar bölgesinde hizmet vermektedir. Tesis Adnan Menderes Havalimanına 26 km, İzmir Otogarına 7 km, şehir merkezine 2 km uzaklıktadır.\n" +
-                    "Tesis, güler yüzlü personeli ve hizmet anlayışı ile misafirlerine konforlu bir konaklama imkanı sunuyor. \n" +
-                    "Tesisin kalite ve konforu bir araya getiren odalarında; kasa, LCD TV, uydu yayını, minibar ve çay-kahve makinesi bulunuyor.\n" +
-                    "Bagaj muhafazası ve 24 saat açık resepsiyon tesisin diğer olanakları arasında yer alıyor.");
+            cityOrHotelDescription.setText("All rooms have direct telephone, minibar, tv, central air conditioning, shower, bathtub, wc, hair dryer, toilet phone, fire alarm system, sound and heat proof windows. There is a 24 hour multilingual newspaper There are central air conditioning and heating, tv, wireless internet, cafe, ironing, dry cleaning, safe box, 24 hour room service, generator, services are available. The hotel also offers breakfast room, service and Turkish and International cuisine.");
             cityPopulationText.setText("122");
             cityAltitudeText.setText("2011");
             annualTouristVisitText.setText("188₺");
@@ -542,10 +523,7 @@ public class CityAndHotelSelectionController implements Initializable {
 
             selectedHotelName = "Bera Ankara ";
             cityOrHotelName.setText(selectedHotelName);
-            cityOrHotelDescription.setText("Ramada Plaza İzmir; İzmir, Kahramanlar bölgesinde hizmet vermektedir. Tesis Adnan Menderes Havalimanına 26 km, İzmir Otogarına 7 km, şehir merkezine 2 km uzaklıktadır.\n" +
-                    "Tesis, güler yüzlü personeli ve hizmet anlayışı ile misafirlerine konforlu bir konaklama imkanı sunuyor. \n" +
-                    "Tesisin kalite ve konforu bir araya getiren odalarında; kasa, LCD TV, uydu yayını, minibar ve çay-kahve makinesi bulunuyor.\n" +
-                    "Bagaj muhafazası ve 24 saat açık resepsiyon tesisin diğer olanakları arasında yer alıyor.");
+            cityOrHotelDescription.setText("All rooms have direct telephone, minibar, tv, central air conditioning, shower, bathtub, wc, hair dryer, toilet phone, fire alarm system, sound and heat proof windows. There is a 24 hour multilingual newspaper There are central air conditioning and heating, tv, wireless internet, cafe, ironing, dry cleaning, safe box, 24 hour room service, generator, services are available. The hotel also offers breakfast room, service and Turkish and International cuisine.");
             cityPopulationText.setText("209");
             cityAltitudeText.setText("2017");
             annualTouristVisitText.setText("227₺");
@@ -567,7 +545,7 @@ public class CityAndHotelSelectionController implements Initializable {
 
             selectedHotelName = "Gür Kent";
             cityOrHotelName.setText(selectedHotelName);
-            cityOrHotelDescription.setText("Hem iş hem eğlence amaçlı seyahat eden misafirlere rahat bir konaklama imkanı veren Gür Kent Hotel, Kızılay Meydanı ve Gençlik Parkı gibi yerlere yakın konumda rahat bir konaklama alternatifi sunuyor. ");
+            cityOrHotelDescription.setText("Offering comfortable accommodation for both business and leisure travelers, Gür Kent Hotel offers comfortable accommodation options close to places such as Kızılay Square and Youth Park.");
             cityPopulationText.setText("117");
             cityAltitudeText.setText("2012");
             annualTouristVisitText.setText("149₺");
@@ -578,9 +556,7 @@ public class CityAndHotelSelectionController implements Initializable {
 
             selectedHotelName = "Dafne";
             cityOrHotelName.setText(selectedHotelName);
-            cityOrHotelDescription.setText("Konya Yolu üzerinde bulunan Dafne Otel Aşti'ye 3 km. Esenboğa Hava alanına 45 km. Devlet Demir Yollarına 7 km. mesafededir. Anitkabir ve Kızılay ortalama 5 km. uzaklıktadır. OTELİMİZ AİLE OTELİDİR EVLİLİK CÜZDANI SORULMAKTADIR.\n" +
-                    "\n" +
-                    "Dafne Hotel , Ankara’nın yükselen değeri olmaya devam eden semtlerinden Balgat’ta yer almaktadır. Sizleri ağırlamaktan büyük memnuniyet duyacak olan Dafne Hotel single.double.trıple ve suıt odalar olmak üzere 72 oda 155 yatak kapasitelidir.");
+            cityOrHotelDescription.setText("Located on Konya Road, Dafne Hotel is 3 km away from Aşti. 45 km to Esenboğa Airport. 7 km to the State Railways. Away. Anitkabir and Kızılay are 5 km on average. Away. Dafne Hotel is located in Balgat, one of Ankara's highlights. Dafne Hotel has a capacity of 155 rooms with 72 rooms including single.Double.Triple and suıt rooms which will be very pleased with you.");
             cityPopulationText.setText("72");
             cityAltitudeText.setText("2015");
             annualTouristVisitText.setText("175₺");
@@ -591,9 +567,7 @@ public class CityAndHotelSelectionController implements Initializable {
 
             selectedHotelName = "Swissotel";
             cityOrHotelName.setText(selectedHotelName);
-            cityOrHotelDescription.setText("Başkent Ankara'nın elit semti Çankaya'da bulunan Swissôtel Ankara, modern binası ve eşsiz donanımıyla misafirlerine hizmet vermektedir. Swissotel Ankara, Ankara'nın ihtişamını ve konforunu duyularınıza yeniden tanıtır: Amrita Spa & Wellness ile lüks bir yaşamın keyfine varın. .\n" +
-                    "\n" +
-                    "Swissotel Ankara, Cumhurbaşkanlığı Köşkü ve bir çok elçiliklere yakın mesafededir. Şehir merkezine 10 dakika, Esenboğa havalimanına sadece 45 dakika uzaklıkta olup, alışveriş merkezlerine ulaşım kolaylıkla sağlanmaktadır.");
+            cityOrHotelDescription.setText("Swissôtel Ankara, located in Çankaya, the elite district of the capital Ankara, serves its guests with its modern building and unique equipment. Swissotel Ankara redefines Ankara's splendor and comfort: Amrita Spa & Wellness enjoy a luxurious life. Swissotel Ankara is close to the Presidential Palace and many embassies. It is only 10 minutes to the city center and 45 minutes to Esenboğa Airport, making it easy to reach shopping centers.");
             cityPopulationText.setText("150");
             cityAltitudeText.setText("2010");
             annualTouristVisitText.setText("458₺");
@@ -604,10 +578,7 @@ public class CityAndHotelSelectionController implements Initializable {
 
             selectedHotelName = "Maltepe 2000";
             cityOrHotelName.setText(selectedHotelName);
-            cityOrHotelDescription.setText("Ramada Plaza İzmir; İzmir, Kahramanlar bölgesinde hizmet vermektedir. Tesis Adnan Menderes Havalimanına 26 km, İzmir Otogarına 7 km, şehir merkezine 2 km uzaklıktadır.\n" +
-                    "Tesis, güler yüzlü personeli ve hizmet anlayışı ile misafirlerine konforlu bir konaklama imkanı sunuyor. \n" +
-                    "Tesisin kalite ve konforu bir araya getiren odalarında; kasa, LCD TV, uydu yayını, minibar ve çay-kahve makinesi bulunuyor.\n" +
-                    "Bagaj muhafazası ve 24 saat açık resepsiyon tesisin diğer olanakları arasında yer alıyor.");
+            cityOrHotelDescription.setText("All rooms have direct telephone, minibar, tv, central air conditioning, shower, bathtub, wc, hair dryer, toilet phone, fire alarm system, sound and heat proof windows. There is a 24 hour multilingual newspaper There are central air conditioning and heating, tv, wireless internet, cafe, ironing, dry cleaning, safe box, 24 hour room service, generator, services are available. The hotel also offers breakfast room, service and Turkish and International cuisine.");
             cityPopulationText.setText("35");
             cityAltitudeText.setText("2013");
             annualTouristVisitText.setText("281₺");
@@ -619,7 +590,7 @@ public class CityAndHotelSelectionController implements Initializable {
 
             selectedHotelName = "Golden Sun";
             cityOrHotelName.setText(selectedHotelName);
-            cityOrHotelDescription.setText("");
+            cityOrHotelDescription.setText("All rooms have direct telephone, minibar, tv, central air conditioning, shower, bathtub, wc, hair dryer, toilet phone, fire alarm system, sound and heat proof windows. There is a 24 hour multilingual newspaper There are central air conditioning and heating, tv, wireless internet, cafe, ironing, dry cleaning, safe box, 24 hour room service, generator, services are available. The hotel also offers breakfast room, service and Turkish and International cuisine.");
             cityPopulationText.setText("80");
             cityAltitudeText.setText("2010");
             annualTouristVisitText.setText("130₺");
@@ -630,10 +601,7 @@ public class CityAndHotelSelectionController implements Initializable {
 
             selectedHotelName = "Medusa";
             cityOrHotelName.setText(selectedHotelName);
-            cityOrHotelDescription.setText("Ramada Plaza İzmir; İzmir, Kahramanlar bölgesinde hizmet vermektedir. Tesis Adnan Menderes Havalimanına 26 km, İzmir Otogarına 7 km, şehir merkezine 2 km uzaklıktadır.\n" +
-                    "Tesis, güler yüzlü personeli ve hizmet anlayışı ile misafirlerine konforlu bir konaklama imkanı sunuyor. \n" +
-                    "Tesisin kalite ve konforu bir araya getiren odalarında; kasa, LCD TV, uydu yayını, minibar ve çay-kahve makinesi bulunuyor.\n" +
-                    "Bagaj muhafazası ve 24 saat açık resepsiyon tesisin diğer olanakları arasında yer alıyor.");
+            cityOrHotelDescription.setText("All rooms have direct telephone, minibar, tv, central air conditioning, shower, bathtub, wc, hair dryer, toilet phone, fire alarm system, sound and heat proof windows. There is a 24 hour multilingual newspaper There are central air conditioning and heating, tv, wireless internet, cafe, ironing, dry cleaning, safe box, 24 hour room service, generator, services are available. The hotel also offers breakfast room, service and Turkish and International cuisine.");
             cityPopulationText.setText("85");
             cityAltitudeText.setText("2012");
             annualTouristVisitText.setText("141₺");
@@ -644,10 +612,7 @@ public class CityAndHotelSelectionController implements Initializable {
 
             selectedHotelName = "Ramada Plaza";
             cityOrHotelName.setText(selectedHotelName);
-            cityOrHotelDescription.setText("Ramada Plaza İzmir; İzmir, Kahramanlar bölgesinde hizmet vermektedir. Tesis Adnan Menderes Havalimanına 26 km, İzmir Otogarına 7 km, şehir merkezine 2 km uzaklıktadır.\n" +
-                    "Tesis, güler yüzlü personeli ve hizmet anlayışı ile misafirlerine konforlu bir konaklama imkanı sunuyor. \n" +
-                    "Tesisin kalite ve konforu bir araya getiren odalarında; kasa, LCD TV, uydu yayını, minibar ve çay-kahve makinesi bulunuyor.\n" +
-                    "Bagaj muhafazası ve 24 saat açık resepsiyon tesisin diğer olanakları arasında yer alıyor.");
+            cityOrHotelDescription.setText("All rooms have direct telephone, minibar, tv, central air conditioning, shower, bathtub, wc, hair dryer, toilet phone, fire alarm system, sound and heat proof windows. There is a 24 hour multilingual newspaper There are central air conditioning and heating, tv, wireless internet, cafe, ironing, dry cleaning, safe box, 24 hour room service, generator, services are available. The hotel also offers breakfast room, service and Turkish and International cuisine.");
             cityPopulationText.setText("230");
             cityAltitudeText.setText("2008");
             annualTouristVisitText.setText("200₺");
@@ -658,10 +623,7 @@ public class CityAndHotelSelectionController implements Initializable {
 
             selectedHotelName = "Throne Sea Gate";
             cityOrHotelName.setText(selectedHotelName);
-            cityOrHotelDescription.setText("Ramada Plaza İzmir; İzmir, Kahramanlar bölgesinde hizmet vermektedir. Tesis Adnan Menderes Havalimanına 26 km, İzmir Otogarına 7 km, şehir merkezine 2 km uzaklıktadır.\n" +
-                    "Tesis, güler yüzlü personeli ve hizmet anlayışı ile misafirlerine konforlu bir konaklama imkanı sunuyor. \n" +
-                    "Tesisin kalite ve konforu bir araya getiren odalarında; kasa, LCD TV, uydu yayını, minibar ve çay-kahve makinesi bulunuyor.\n" +
-                    "Bagaj muhafazası ve 24 saat açık resepsiyon tesisin diğer olanakları arasında yer alıyor.");
+            cityOrHotelDescription.setText("All rooms have direct telephone, minibar, tv, central air conditioning, shower, bathtub, wc, hair dryer, toilet phone, fire alarm system, sound and heat proof windows. There is a 24 hour multilingual newspaper There are central air conditioning and heating, tv, wireless internet, cafe, ironing, dry cleaning, safe box, 24 hour room service, generator, services are available. The hotel also offers breakfast room, service and Turkish and International cuisine.");
             cityPopulationText.setText("180");
             cityAltitudeText.setText("2015");
             annualTouristVisitText.setText("223₺");
@@ -672,10 +634,7 @@ public class CityAndHotelSelectionController implements Initializable {
 
             selectedHotelName = "Orange Country";
             cityOrHotelName.setText(selectedHotelName);
-            cityOrHotelDescription.setText("Ramada Plaza İzmir; İzmir, Kahramanlar bölgesinde hizmet vermektedir. Tesis Adnan Menderes Havalimanına 26 km, İzmir Otogarına 7 km, şehir merkezine 2 km uzaklıktadır.\n" +
-                    "Tesis, güler yüzlü personeli ve hizmet anlayışı ile misafirlerine konforlu bir konaklama imkanı sunuyor. \n" +
-                    "Tesisin kalite ve konforu bir araya getiren odalarında; kasa, LCD TV, uydu yayını, minibar ve çay-kahve makinesi bulunuyor.\n" +
-                    "Bagaj muhafazası ve 24 saat açık resepsiyon tesisin diğer olanakları arasında yer alıyor.");
+            cityOrHotelDescription.setText("All rooms have direct telephone, minibar, tv, central air conditioning, shower, bathtub, wc, hair dryer, toilet phone, fire alarm system, sound and heat proof windows. There is a 24 hour multilingual newspaper There are central air conditioning and heating, tv, wireless internet, cafe, ironing, dry cleaning, safe box, 24 hour room service, generator, services are available. The hotel also offers breakfast room, service and Turkish and International cuisine.");
             cityPopulationText.setText("193");
             cityAltitudeText.setText("2005");
             annualTouristVisitText.setText("178₺");
@@ -686,10 +645,7 @@ public class CityAndHotelSelectionController implements Initializable {
 
             selectedHotelName = "Angora Hotel";
             cityOrHotelName.setText(selectedHotelName);
-            cityOrHotelDescription.setText("Ramada Plaza İzmir; İzmir, Kahramanlar bölgesinde hizmet vermektedir. Tesis Adnan Menderes Havalimanına 26 km, İzmir Otogarına 7 km, şehir merkezine 2 km uzaklıktadır.\n" +
-                    "Tesis, güler yüzlü personeli ve hizmet anlayışı ile misafirlerine konforlu bir konaklama imkanı sunuyor. \n" +
-                    "Tesisin kalite ve konforu bir araya getiren odalarında; kasa, LCD TV, uydu yayını, minibar ve çay-kahve makinesi bulunuyor.\n" +
-                    "Bagaj muhafazası ve 24 saat açık resepsiyon tesisin diğer olanakları arasında yer alıyor.");
+            cityOrHotelDescription.setText("All rooms have direct telephone, minibar, tv, central air conditioning, shower, bathtub, wc, hair dryer, toilet phone, fire alarm system, sound and heat proof windows. There is a 24 hour multilingual newspaper There are central air conditioning and heating, tv, wireless internet, cafe, ironing, dry cleaning, safe box, 24 hour room service, generator, services are available. The hotel also offers breakfast room, service and Turkish and International cuisine.");
             cityPopulationText.setText("75");
             cityAltitudeText.setText("2011");
             annualTouristVisitText.setText("140₺");
@@ -700,10 +656,7 @@ public class CityAndHotelSelectionController implements Initializable {
 
             selectedHotelName = "Portakal Bahçesi Hotel";
             cityOrHotelName.setText(selectedHotelName);
-            cityOrHotelDescription.setText("Ramada Plaza İzmir; İzmir, Kahramanlar bölgesinde hizmet vermektedir. Tesis Adnan Menderes Havalimanına 26 km, İzmir Otogarına 7 km, şehir merkezine 2 km uzaklıktadır.\n" +
-                    "Tesis, güler yüzlü personeli ve hizmet anlayışı ile misafirlerine konforlu bir konaklama imkanı sunuyor. \n" +
-                    "Tesisin kalite ve konforu bir araya getiren odalarında; kasa, LCD TV, uydu yayını, minibar ve çay-kahve makinesi bulunuyor.\n" +
-                    "Bagaj muhafazası ve 24 saat açık resepsiyon tesisin diğer olanakları arasında yer alıyor.");
+            cityOrHotelDescription.setText("All rooms have direct telephone, minibar, tv, central air conditioning, shower, bathtub, wc, hair dryer, toilet phone, fire alarm system, sound and heat proof windows. There is a 24 hour multilingual newspaper There are central air conditioning and heating, tv, wireless internet, cafe, ironing, dry cleaning, safe box, 24 hour room service, generator, services are available. The hotel also offers breakfast room, service and Turkish and International cuisine.");
             cityPopulationText.setText("160");
             cityAltitudeText.setText("2016");
             annualTouristVisitText.setText("185₺");
@@ -714,10 +667,7 @@ public class CityAndHotelSelectionController implements Initializable {
 
             selectedHotelName = "DoubleTree by Hilton";
             cityOrHotelName.setText(selectedHotelName);
-            cityOrHotelDescription.setText("Ramada Plaza İzmir; İzmir, Kahramanlar bölgesinde hizmet vermektedir. Tesis Adnan Menderes Havalimanına 26 km, İzmir Otogarına 7 km, şehir merkezine 2 km uzaklıktadır.\n" +
-                    "Tesis, güler yüzlü personeli ve hizmet anlayışı ile misafirlerine konforlu bir konaklama imkanı sunuyor. \n" +
-                    "Tesisin kalite ve konforu bir araya getiren odalarında; kasa, LCD TV, uydu yayını, minibar ve çay-kahve makinesi bulunuyor.\n" +
-                    "Bagaj muhafazası ve 24 saat açık resepsiyon tesisin diğer olanakları arasında yer alıyor.");
+            cityOrHotelDescription.setText("All rooms have direct telephone, minibar, tv, central air conditioning, shower, bathtub, wc, hair dryer, toilet phone, fire alarm system, sound and heat proof windows. There is a 24 hour multilingual newspaper There are central air conditioning and heating, tv, wireless internet, cafe, ironing, dry cleaning, safe box, 24 hour room service, generator, services are available. The hotel also offers breakfast room, service and Turkish and International cuisine.");
             cityPopulationText.setText("250");
             cityAltitudeText.setText("2013");
             annualTouristVisitText.setText("210₺");
@@ -728,10 +678,7 @@ public class CityAndHotelSelectionController implements Initializable {
 
             selectedHotelName = "Olea Nova";
             cityOrHotelName.setText(selectedHotelName);
-            cityOrHotelDescription.setText("Ramada Plaza İzmir; İzmir, Kahramanlar bölgesinde hizmet vermektedir. Tesis Adnan Menderes Havalimanına 26 km, İzmir Otogarına 7 km, şehir merkezine 2 km uzaklıktadır.\n" +
-                    "Tesis, güler yüzlü personeli ve hizmet anlayışı ile misafirlerine konforlu bir konaklama imkanı sunuyor. \n" +
-                    "Tesisin kalite ve konforu bir araya getiren odalarında; kasa, LCD TV, uydu yayını, minibar ve çay-kahve makinesi bulunuyor.\n" +
-                    "Bagaj muhafazası ve 24 saat açık resepsiyon tesisin diğer olanakları arasında yer alıyor.");
+            cityOrHotelDescription.setText("All rooms have direct telephone, minibar, tv, central air conditioning, shower, bathtub, wc, hair dryer, toilet phone, fire alarm system, sound and heat proof windows. There is a 24 hour multilingual newspaper There are central air conditioning and heating, tv, wireless internet, cafe, ironing, dry cleaning, safe box, 24 hour room service, generator, services are available. The hotel also offers breakfast room, service and Turkish and International cuisine.");
             cityPopulationText.setText("65");
             cityAltitudeText.setText("2009");
             annualTouristVisitText.setText("155₺");
@@ -743,10 +690,7 @@ public class CityAndHotelSelectionController implements Initializable {
 
             selectedHotelName = "Royal Gaziantep";
             cityOrHotelName.setText(selectedHotelName);
-            cityOrHotelDescription.setText("Ramada Plaza İzmir; İzmir, Kahramanlar bölgesinde hizmet vermektedir. Tesis Adnan Menderes Havalimanına 26 km, İzmir Otogarına 7 km, şehir merkezine 2 km uzaklıktadır.\n" +
-                    "Tesis, güler yüzlü personeli ve hizmet anlayışı ile misafirlerine konforlu bir konaklama imkanı sunuyor. \n" +
-                    "Tesisin kalite ve konforu bir araya getiren odalarında; kasa, LCD TV, uydu yayını, minibar ve çay-kahve makinesi bulunuyor.\n" +
-                    "Bagaj muhafazası ve 24 saat açık resepsiyon tesisin diğer olanakları arasında yer alıyor.");
+            cityOrHotelDescription.setText("All rooms have direct telephone, minibar, tv, central air conditioning, shower, bathtub, wc, hair dryer, toilet phone, fire alarm system, sound and heat proof windows. There is a 24 hour multilingual newspaper There are central air conditioning and heating, tv, wireless internet, cafe, ironing, dry cleaning, safe box, 24 hour room service, generator, services are available. The hotel also offers breakfast room, service and Turkish and International cuisine.");
             cityPopulationText.setText("110");
             cityAltitudeText.setText("2015");
             annualTouristVisitText.setText("132₺");
@@ -757,10 +701,7 @@ public class CityAndHotelSelectionController implements Initializable {
 
             selectedHotelName = "Best Western";
             cityOrHotelName.setText(selectedHotelName);
-            cityOrHotelDescription.setText("Ramada Plaza İzmir; İzmir, Kahramanlar bölgesinde hizmet vermektedir. Tesis Adnan Menderes Havalimanına 26 km, İzmir Otogarına 7 km, şehir merkezine 2 km uzaklıktadır.\n" +
-                    "Tesis, güler yüzlü personeli ve hizmet anlayışı ile misafirlerine konforlu bir konaklama imkanı sunuyor. \n" +
-                    "Tesisin kalite ve konforu bir araya getiren odalarında; kasa, LCD TV, uydu yayını, minibar ve çay-kahve makinesi bulunuyor.\n" +
-                    "Bagaj muhafazası ve 24 saat açık resepsiyon tesisin diğer olanakları arasında yer alıyor.");
+            cityOrHotelDescription.setText("All rooms have direct telephone, minibar, tv, central air conditioning, shower, bathtub, wc, hair dryer, toilet phone, fire alarm system, sound and heat proof windows. There is a 24 hour multilingual newspaper There are central air conditioning and heating, tv, wireless internet, cafe, ironing, dry cleaning, safe box, 24 hour room service, generator, services are available. The hotel also offers breakfast room, service and Turkish and International cuisine.");
             cityPopulationText.setText("128");
             cityAltitudeText.setText("2014");
             annualTouristVisitText.setText("154₺");
@@ -771,10 +712,7 @@ public class CityAndHotelSelectionController implements Initializable {
 
             selectedHotelName = "Utku Bey Hotel";
             cityOrHotelName.setText(selectedHotelName);
-            cityOrHotelDescription.setText("Ramada Plaza İzmir; İzmir, Kahramanlar bölgesinde hizmet vermektedir. Tesis Adnan Menderes Havalimanına 26 km, İzmir Otogarına 7 km, şehir merkezine 2 km uzaklıktadır.\n" +
-                    "Tesis, güler yüzlü personeli ve hizmet anlayışı ile misafirlerine konforlu bir konaklama imkanı sunuyor. \n" +
-                    "Tesisin kalite ve konforu bir araya getiren odalarında; kasa, LCD TV, uydu yayını, minibar ve çay-kahve makinesi bulunuyor.\n" +
-                    "Bagaj muhafazası ve 24 saat açık resepsiyon tesisin diğer olanakları arasında yer alıyor.");
+            cityOrHotelDescription.setText("All rooms have direct telephone, minibar, tv, central air conditioning, shower, bathtub, wc, hair dryer, toilet phone, fire alarm system, sound and heat proof windows. There is a 24 hour multilingual newspaper There are central air conditioning and heating, tv, wireless internet, cafe, ironing, dry cleaning, safe box, 24 hour room service, generator, services are available. The hotel also offers breakfast room, service and Turkish and International cuisine.");
             cityPopulationText.setText("33");
             cityAltitudeText.setText("2017");
             annualTouristVisitText.setText("102₺");
@@ -785,10 +723,7 @@ public class CityAndHotelSelectionController implements Initializable {
 
             selectedHotelName = "Dedeman Park";
             cityOrHotelName.setText(selectedHotelName);
-            cityOrHotelDescription.setText("Ramada Plaza İzmir; İzmir, Kahramanlar bölgesinde hizmet vermektedir. Tesis Adnan Menderes Havalimanına 26 km, İzmir Otogarına 7 km, şehir merkezine 2 km uzaklıktadır.\n" +
-                    "Tesis, güler yüzlü personeli ve hizmet anlayışı ile misafirlerine konforlu bir konaklama imkanı sunuyor. \n" +
-                    "Tesisin kalite ve konforu bir araya getiren odalarında; kasa, LCD TV, uydu yayını, minibar ve çay-kahve makinesi bulunuyor.\n" +
-                    "Bagaj muhafazası ve 24 saat açık resepsiyon tesisin diğer olanakları arasında yer alıyor.");
+            cityOrHotelDescription.setText("All rooms have direct telephone, minibar, tv, central air conditioning, shower, bathtub, wc, hair dryer, toilet phone, fire alarm system, sound and heat proof windows. There is a 24 hour multilingual newspaper There are central air conditioning and heating, tv, wireless internet, cafe, ironing, dry cleaning, safe box, 24 hour room service, generator, services are available. The hotel also offers breakfast room, service and Turkish and International cuisine.");
             cityPopulationText.setText("121");
             cityAltitudeText.setText("2010");
             annualTouristVisitText.setText("139₺");
@@ -799,10 +734,7 @@ public class CityAndHotelSelectionController implements Initializable {
 
             selectedHotelName = "Büyük Velic";
             cityOrHotelName.setText(selectedHotelName);
-            cityOrHotelDescription.setText("Ramada Plaza İzmir; İzmir, Kahramanlar bölgesinde hizmet vermektedir. Tesis Adnan Menderes Havalimanına 26 km, İzmir Otogarına 7 km, şehir merkezine 2 km uzaklıktadır.\n" +
-                    "Tesis, güler yüzlü personeli ve hizmet anlayışı ile misafirlerine konforlu bir konaklama imkanı sunuyor. \n" +
-                    "Tesisin kalite ve konforu bir araya getiren odalarında; kasa, LCD TV, uydu yayını, minibar ve çay-kahve makinesi bulunuyor.\n" +
-                    "Bagaj muhafazası ve 24 saat açık resepsiyon tesisin diğer olanakları arasında yer alıyor.");
+            cityOrHotelDescription.setText("All rooms have direct telephone, minibar, tv, central air conditioning, shower, bathtub, wc, hair dryer, toilet phone, fire alarm system, sound and heat proof windows. There is a 24 hour multilingual newspaper There are central air conditioning and heating, tv, wireless internet, cafe, ironing, dry cleaning, safe box, 24 hour room service, generator, services are available. The hotel also offers breakfast room, service and Turkish and International cuisine.");
             cityPopulationText.setText("105");
             cityAltitudeText.setText("2012");
             annualTouristVisitText.setText("127₺");
@@ -812,10 +744,7 @@ public class CityAndHotelSelectionController implements Initializable {
 
             selectedHotelName = "İbis Hotel";
             cityOrHotelName.setText(selectedHotelName);
-            cityOrHotelDescription.setText("Ramada Plaza İzmir; İzmir, Kahramanlar bölgesinde hizmet vermektedir. Tesis Adnan Menderes Havalimanına 26 km, İzmir Otogarına 7 km, şehir merkezine 2 km uzaklıktadır.\n" +
-                    "Tesis, güler yüzlü personeli ve hizmet anlayışı ile misafirlerine konforlu bir konaklama imkanı sunuyor. \n" +
-                    "Tesisin kalite ve konforu bir araya getiren odalarında; kasa, LCD TV, uydu yayını, minibar ve çay-kahve makinesi bulunuyor.\n" +
-                    "Bagaj muhafazası ve 24 saat açık resepsiyon tesisin diğer olanakları arasında yer alıyor.");
+            cityOrHotelDescription.setText("All rooms have direct telephone, minibar, tv, central air conditioning, shower, bathtub, wc, hair dryer, toilet phone, fire alarm system, sound and heat proof windows. There is a 24 hour multilingual newspaper There are central air conditioning and heating, tv, wireless internet, cafe, ironing, dry cleaning, safe box, 24 hour room service, generator, services are available. The hotel also offers breakfast room, service and Turkish and International cuisine.");
             cityPopulationText.setText("90");
             cityAltitudeText.setText("2007");
             annualTouristVisitText.setText("112₺");
@@ -825,10 +754,7 @@ public class CityAndHotelSelectionController implements Initializable {
 
             selectedHotelName = "Yunus Hotel";
             cityOrHotelName.setText(selectedHotelName);
-            cityOrHotelDescription.setText("Ramada Plaza İzmir; İzmir, Kahramanlar bölgesinde hizmet vermektedir. Tesis Adnan Menderes Havalimanına 26 km, İzmir Otogarına 7 km, şehir merkezine 2 km uzaklıktadır.\n" +
-                    "Tesis, güler yüzlü personeli ve hizmet anlayışı ile misafirlerine konforlu bir konaklama imkanı sunuyor. \n" +
-                    "Tesisin kalite ve konforu bir araya getiren odalarında; kasa, LCD TV, uydu yayını, minibar ve çay-kahve makinesi bulunuyor.\n" +
-                    "Bagaj muhafazası ve 24 saat açık resepsiyon tesisin diğer olanakları arasında yer alıyor.");
+            cityOrHotelDescription.setText("All rooms have direct telephone, minibar, tv, central air conditioning, shower, bathtub, wc, hair dryer, toilet phone, fire alarm system, sound and heat proof windows. There is a 24 hour multilingual newspaper There are central air conditioning and heating, tv, wireless internet, cafe, ironing, dry cleaning, safe box, 24 hour room service, generator, services are available. The hotel also offers breakfast room, service and Turkish and International cuisine.");
             cityPopulationText.setText("25");
             cityAltitudeText.setText("2009");
             annualTouristVisitText.setText("100₺");
@@ -838,10 +764,7 @@ public class CityAndHotelSelectionController implements Initializable {
 
             selectedHotelName = "Grand Hotel";
             cityOrHotelName.setText(selectedHotelName);
-            cityOrHotelDescription.setText("Ramada Plaza İzmir; İzmir, Kahramanlar bölgesinde hizmet vermektedir. Tesis Adnan Menderes Havalimanına 26 km, İzmir Otogarına 7 km, şehir merkezine 2 km uzaklıktadır.\n" +
-                    "Tesis, güler yüzlü personeli ve hizmet anlayışı ile misafirlerine konforlu bir konaklama imkanı sunuyor. \n" +
-                    "Tesisin kalite ve konforu bir araya getiren odalarında; kasa, LCD TV, uydu yayını, minibar ve çay-kahve makinesi bulunuyor.\n" +
-                    "Bagaj muhafazası ve 24 saat açık resepsiyon tesisin diğer olanakları arasında yer alıyor.");
+            cityOrHotelDescription.setText("All rooms have direct telephone, minibar, tv, central air conditioning, shower, bathtub, wc, hair dryer, toilet phone, fire alarm system, sound and heat proof windows. There is a 24 hour multilingual newspaper There are central air conditioning and heating, tv, wireless internet, cafe, ironing, dry cleaning, safe box, 24 hour room service, generator, services are available. The hotel also offers breakfast room, service and Turkish and International cuisine.");
             cityPopulationText.setText("270");
             cityAltitudeText.setText("2002");
             annualTouristVisitText.setText("250₺");
@@ -851,10 +774,7 @@ public class CityAndHotelSelectionController implements Initializable {
 
             selectedHotelName = "Küçük Velic Hotel";
             cityOrHotelName.setText(selectedHotelName);
-            cityOrHotelDescription.setText("Ramada Plaza İzmir; İzmir, Kahramanlar bölgesinde hizmet vermektedir. Tesis Adnan Menderes Havalimanına 26 km, İzmir Otogarına 7 km, şehir merkezine 2 km uzaklıktadır.\n" +
-                    "Tesis, güler yüzlü personeli ve hizmet anlayışı ile misafirlerine konforlu bir konaklama imkanı sunuyor. \n" +
-                    "Tesisin kalite ve konforu bir araya getiren odalarında; kasa, LCD TV, uydu yayını, minibar ve çay-kahve makinesi bulunuyor.\n" +
-                    "Bagaj muhafazası ve 24 saat açık resepsiyon tesisin diğer olanakları arasında yer alıyor.");
+            cityOrHotelDescription.setText("All rooms have direct telephone, minibar, tv, central air conditioning, shower, bathtub, wc, hair dryer, toilet phone, fire alarm system, sound and heat proof windows. There is a 24 hour multilingual newspaper There are central air conditioning and heating, tv, wireless internet, cafe, ironing, dry cleaning, safe box, 24 hour room service, generator, services are available. The hotel also offers breakfast room, service and Turkish and International cuisine.");
             cityPopulationText.setText("70");
             cityAltitudeText.setText("2006");
             annualTouristVisitText.setText("118₺");
@@ -866,10 +786,7 @@ public class CityAndHotelSelectionController implements Initializable {
 
             selectedHotelName = "Kervansaray Hotel";
             cityOrHotelName.setText(selectedHotelName);
-            cityOrHotelDescription.setText("Ramada Plaza İzmir; İzmir, Kahramanlar bölgesinde hizmet vermektedir. Tesis Adnan Menderes Havalimanına 26 km, İzmir Otogarına 7 km, şehir merkezine 2 km uzaklıktadır.\n" +
-                    "Tesis, güler yüzlü personeli ve hizmet anlayışı ile misafirlerine konforlu bir konaklama imkanı sunuyor. \n" +
-                    "Tesisin kalite ve konforu bir araya getiren odalarında; kasa, LCD TV, uydu yayını, minibar ve çay-kahve makinesi bulunuyor.\n" +
-                    "Bagaj muhafazası ve 24 saat açık resepsiyon tesisin diğer olanakları arasında yer alıyor.");
+            cityOrHotelDescription.setText("All rooms have direct telephone, minibar, tv, central air conditioning, shower, bathtub, wc, hair dryer, toilet phone, fire alarm system, sound and heat proof windows. There is a 24 hour multilingual newspaper There are central air conditioning and heating, tv, wireless internet, cafe, ironing, dry cleaning, safe box, 24 hour room service, generator, services are available. The hotel also offers breakfast room, service and Turkish and International cuisine.");
             cityPopulationText.setText("59");
             cityAltitudeText.setText("2011");
             annualTouristVisitText.setText("106₺");
@@ -879,10 +796,7 @@ public class CityAndHotelSelectionController implements Initializable {
 
             selectedHotelName = "Ramada Plaza";
             cityOrHotelName.setText(selectedHotelName);
-            cityOrHotelDescription.setText("Ramada Plaza İzmir; İzmir, Kahramanlar bölgesinde hizmet vermektedir. Tesis Adnan Menderes Havalimanına 26 km, İzmir Otogarına 7 km, şehir merkezine 2 km uzaklıktadır.\n" +
-                    "Tesis, güler yüzlü personeli ve hizmet anlayışı ile misafirlerine konforlu bir konaklama imkanı sunuyor. \n" +
-                    "Tesisin kalite ve konforu bir araya getiren odalarında; kasa, LCD TV, uydu yayını, minibar ve çay-kahve makinesi bulunuyor.\n" +
-                    "Bagaj muhafazası ve 24 saat açık resepsiyon tesisin diğer olanakları arasında yer alıyor.");
+            cityOrHotelDescription.setText("All rooms have direct telephone, minibar, tv, central air conditioning, shower, bathtub, wc, hair dryer, toilet phone, fire alarm system, sound and heat proof windows. There is a 24 hour multilingual newspaper There are central air conditioning and heating, tv, wireless internet, cafe, ironing, dry cleaning, safe box, 24 hour room service, generator, services are available. The hotel also offers breakfast room, service and Turkish and International cuisine.");
             cityPopulationText.setText("40");
             cityAltitudeText.setText("2016");
             annualTouristVisitText.setText("147₺");
@@ -892,10 +806,7 @@ public class CityAndHotelSelectionController implements Initializable {
 
             selectedHotelName = "Heybeli Hotel";
             cityOrHotelName.setText(selectedHotelName);
-            cityOrHotelDescription.setText("Ramada Plaza İzmir; İzmir, Kahramanlar bölgesinde hizmet vermektedir. Tesis Adnan Menderes Havalimanına 26 km, İzmir Otogarına 7 km, şehir merkezine 2 km uzaklıktadır.\n" +
-                    "Tesis, güler yüzlü personeli ve hizmet anlayışı ile misafirlerine konforlu bir konaklama imkanı sunuyor. \n" +
-                    "Tesisin kalite ve konforu bir araya getiren odalarında; kasa, LCD TV, uydu yayını, minibar ve çay-kahve makinesi bulunuyor.\n" +
-                    "Bagaj muhafazası ve 24 saat açık resepsiyon tesisin diğer olanakları arasında yer alıyor.");
+            cityOrHotelDescription.setText("All rooms have direct telephone, minibar, tv, central air conditioning, shower, bathtub, wc, hair dryer, toilet phone, fire alarm system, sound and heat proof windows. There is a 24 hour multilingual newspaper There are central air conditioning and heating, tv, wireless internet, cafe, ironing, dry cleaning, safe box, 24 hour room service, generator, services are available. The hotel also offers breakfast room, service and Turkish and International cuisine.");
             cityPopulationText.setText("115");
             cityAltitudeText.setText("2009");
             annualTouristVisitText.setText("203₺");
@@ -905,10 +816,7 @@ public class CityAndHotelSelectionController implements Initializable {
 
             selectedHotelName = "Tuğcu Hotel";
             cityOrHotelName.setText(selectedHotelName);
-            cityOrHotelDescription.setText("Ramada Plaza İzmir; İzmir, Kahramanlar bölgesinde hizmet vermektedir. Tesis Adnan Menderes Havalimanına 26 km, İzmir Otogarına 7 km, şehir merkezine 2 km uzaklıktadır.\n" +
-                    "Tesis, güler yüzlü personeli ve hizmet anlayışı ile misafirlerine konforlu bir konaklama imkanı sunuyor. \n" +
-                    "Tesisin kalite ve konforu bir araya getiren odalarında; kasa, LCD TV, uydu yayını, minibar ve çay-kahve makinesi bulunuyor.\n" +
-                    "Bagaj muhafazası ve 24 saat açık resepsiyon tesisin diğer olanakları arasında yer alıyor.");
+            cityOrHotelDescription.setText("All rooms have direct telephone, minibar, tv, central air conditioning, shower, bathtub, wc, hair dryer, toilet phone, fire alarm system, sound and heat proof windows. There is a 24 hour multilingual newspaper There are central air conditioning and heating, tv, wireless internet, cafe, ironing, dry cleaning, safe box, 24 hour room service, generator, services are available. The hotel also offers breakfast room, service and Turkish and International cuisine.");
             cityPopulationText.setText("100");
             cityAltitudeText.setText("2010");
             annualTouristVisitText.setText("212₺");
@@ -918,10 +826,7 @@ public class CityAndHotelSelectionController implements Initializable {
 
             selectedHotelName = "Green Pursa Hotel";
             cityOrHotelName.setText(selectedHotelName);
-            cityOrHotelDescription.setText("Ramada Plaza İzmir; İzmir, Kahramanlar bölgesinde hizmet vermektedir. Tesis Adnan Menderes Havalimanına 26 km, İzmir Otogarına 7 km, şehir merkezine 2 km uzaklıktadır.\n" +
-                    "Tesis, güler yüzlü personeli ve hizmet anlayışı ile misafirlerine konforlu bir konaklama imkanı sunuyor. \n" +
-                    "Tesisin kalite ve konforu bir araya getiren odalarında; kasa, LCD TV, uydu yayını, minibar ve çay-kahve makinesi bulunuyor.\n" +
-                    "Bagaj muhafazası ve 24 saat açık resepsiyon tesisin diğer olanakları arasında yer alıyor.");
+            cityOrHotelDescription.setText("All rooms have direct telephone, minibar, tv, central air conditioning, shower, bathtub, wc, hair dryer, toilet phone, fire alarm system, sound and heat proof windows. There is a 24 hour multilingual newspaper There are central air conditioning and heating, tv, wireless internet, cafe, ironing, dry cleaning, safe box, 24 hour room service, generator, services are available. The hotel also offers breakfast room, service and Turkish and International cuisine.");
             cityPopulationText.setText("62");
             cityAltitudeText.setText("2004");
             annualTouristVisitText.setText("120₺");
@@ -931,10 +836,7 @@ public class CityAndHotelSelectionController implements Initializable {
 
             selectedHotelName = "Grand Turkuaz Hotel";
             cityOrHotelName.setText(selectedHotelName);
-            cityOrHotelDescription.setText("Ramada Plaza İzmir; İzmir, Kahramanlar bölgesinde hizmet vermektedir. Tesis Adnan Menderes Havalimanına 26 km, İzmir Otogarına 7 km, şehir merkezine 2 km uzaklıktadır.\n" +
-                    "Tesis, güler yüzlü personeli ve hizmet anlayışı ile misafirlerine konforlu bir konaklama imkanı sunuyor. \n" +
-                    "Tesisin kalite ve konforu bir araya getiren odalarında; kasa, LCD TV, uydu yayını, minibar ve çay-kahve makinesi bulunuyor.\n" +
-                    "Bagaj muhafazası ve 24 saat açık resepsiyon tesisin diğer olanakları arasında yer alıyor.");
+            cityOrHotelDescription.setText("All rooms have direct telephone, minibar, tv, central air conditioning, shower, bathtub, wc, hair dryer, toilet phone, fire alarm system, sound and heat proof windows. There is a 24 hour multilingual newspaper There are central air conditioning and heating, tv, wireless internet, cafe, ironing, dry cleaning, safe box, 24 hour room service, generator, services are available. The hotel also offers breakfast room, service and Turkish and International cuisine.");
             cityPopulationText.setText("48");
             cityAltitudeText.setText("2007");
             annualTouristVisitText.setText("133₺");
@@ -944,10 +846,7 @@ public class CityAndHotelSelectionController implements Initializable {
 
             selectedHotelName = "Mercure Hotel";
             cityOrHotelName.setText(selectedHotelName);
-            cityOrHotelDescription.setText("Ramada Plaza İzmir; İzmir, Kahramanlar bölgesinde hizmet vermektedir. Tesis Adnan Menderes Havalimanına 26 km, İzmir Otogarına 7 km, şehir merkezine 2 km uzaklıktadır.\n" +
-                    "Tesis, güler yüzlü personeli ve hizmet anlayışı ile misafirlerine konforlu bir konaklama imkanı sunuyor. \n" +
-                    "Tesisin kalite ve konforu bir araya getiren odalarında; kasa, LCD TV, uydu yayını, minibar ve çay-kahve makinesi bulunuyor.\n" +
-                    "Bagaj muhafazası ve 24 saat açık resepsiyon tesisin diğer olanakları arasında yer alıyor.");
+            cityOrHotelDescription.setText("All rooms have direct telephone, minibar, tv, central air conditioning, shower, bathtub, wc, hair dryer, toilet phone, fire alarm system, sound and heat proof windows. There is a 24 hour multilingual newspaper There are central air conditioning and heating, tv, wireless internet, cafe, ironing, dry cleaning, safe box, 24 hour room service, generator, services are available. The hotel also offers breakfast room, service and Turkish and International cuisine.");
             cityPopulationText.setText("165");
             cityAltitudeText.setText("2013");
             annualTouristVisitText.setText("225₺");
@@ -957,10 +856,7 @@ public class CityAndHotelSelectionController implements Initializable {
 
             selectedHotelName = "Balam Residance";
             cityOrHotelName.setText(selectedHotelName);
-            cityOrHotelDescription.setText("Ramada Plaza İzmir; İzmir, Kahramanlar bölgesinde hizmet vermektedir. Tesis Adnan Menderes Havalimanına 26 km, İzmir Otogarına 7 km, şehir merkezine 2 km uzaklıktadır.\n" +
-                    "Tesis, güler yüzlü personeli ve hizmet anlayışı ile misafirlerine konforlu bir konaklama imkanı sunuyor. \n" +
-                    "Tesisin kalite ve konforu bir araya getiren odalarında; kasa, LCD TV, uydu yayını, minibar ve çay-kahve makinesi bulunuyor.\n" +
-                    "Bagaj muhafazası ve 24 saat açık resepsiyon tesisin diğer olanakları arasında yer alıyor.");
+            cityOrHotelDescription.setText("All rooms have direct telephone, minibar, tv, central air conditioning, shower, bathtub, wc, hair dryer, toilet phone, fire alarm system, sound and heat proof windows. There is a 24 hour multilingual newspaper There are central air conditioning and heating, tv, wireless internet, cafe, ironing, dry cleaning, safe box, 24 hour room service, generator, services are available. The hotel also offers breakfast room, service and Turkish and International cuisine.");
             cityPopulationText.setText("20");
             cityAltitudeText.setText("2017");
             annualTouristVisitText.setText("100₺");
@@ -970,10 +866,7 @@ public class CityAndHotelSelectionController implements Initializable {
 
             selectedHotelName = "Doğalya Hotel";
             cityOrHotelName.setText(selectedHotelName);
-            cityOrHotelDescription.setText("Ramada Plaza İzmir; İzmir, Kahramanlar bölgesinde hizmet vermektedir. Tesis Adnan Menderes Havalimanına 26 km, İzmir Otogarına 7 km, şehir merkezine 2 km uzaklıktadır.\n" +
-                    "Tesis, güler yüzlü personeli ve hizmet anlayışı ile misafirlerine konforlu bir konaklama imkanı sunuyor. \n" +
-                    "Tesisin kalite ve konforu bir araya getiren odalarında; kasa, LCD TV, uydu yayını, minibar ve çay-kahve makinesi bulunuyor.\n" +
-                    "Bagaj muhafazası ve 24 saat açık resepsiyon tesisin diğer olanakları arasında yer alıyor.");
+            cityOrHotelDescription.setText("All rooms have direct telephone, minibar, tv, central air conditioning, shower, bathtub, wc, hair dryer, toilet phone, fire alarm system, sound and heat proof windows. There is a 24 hour multilingual newspaper There are central air conditioning and heating, tv, wireless internet, cafe, ironing, dry cleaning, safe box, 24 hour room service, generator, services are available. The hotel also offers breakfast room, service and Turkish and International cuisine.");
             cityPopulationText.setText("55");
             cityAltitudeText.setText("2005");
             annualTouristVisitText.setText("111₺");
@@ -985,10 +878,7 @@ public class CityAndHotelSelectionController implements Initializable {
 
             selectedHotelName = "Esida Hotel";
             cityOrHotelName.setText(selectedHotelName);
-            cityOrHotelDescription.setText("Ramada Plaza İzmir; İzmir, Kahramanlar bölgesinde hizmet vermektedir. Tesis Adnan Menderes Havalimanına 26 km, İzmir Otogarına 7 km, şehir merkezine 2 km uzaklıktadır.\n" +
-                    "Tesis, güler yüzlü personeli ve hizmet anlayışı ile misafirlerine konforlu bir konaklama imkanı sunuyor. \n" +
-                    "Tesisin kalite ve konforu bir araya getiren odalarında; kasa, LCD TV, uydu yayını, minibar ve çay-kahve makinesi bulunuyor.\n" +
-                    "Bagaj muhafazası ve 24 saat açık resepsiyon tesisin diğer olanakları arasında yer alıyor.");
+            cityOrHotelDescription.setText("All rooms have direct telephone, minibar, tv, central air conditioning, shower, bathtub, wc, hair dryer, toilet phone, fire alarm system, sound and heat proof windows. There is a 24 hour multilingual newspaper There are central air conditioning and heating, tv, wireless internet, cafe, ironing, dry cleaning, safe box, 24 hour room service, generator, services are available. The hotel also offers breakfast room, service and Turkish and International cuisine.");
             cityPopulationText.setText("61");
             cityAltitudeText.setText("2013");
             annualTouristVisitText.setText("105₺");
@@ -998,10 +888,7 @@ public class CityAndHotelSelectionController implements Initializable {
 
             selectedHotelName = "Parion Hotel";
             cityOrHotelName.setText(selectedHotelName);
-            cityOrHotelDescription.setText("Ramada Plaza İzmir; İzmir, Kahramanlar bölgesinde hizmet vermektedir. Tesis Adnan Menderes Havalimanına 26 km, İzmir Otogarına 7 km, şehir merkezine 2 km uzaklıktadır.\n" +
-                    "Tesis, güler yüzlü personeli ve hizmet anlayışı ile misafirlerine konforlu bir konaklama imkanı sunuyor. \n" +
-                    "Tesisin kalite ve konforu bir araya getiren odalarında; kasa, LCD TV, uydu yayını, minibar ve çay-kahve makinesi bulunuyor.\n" +
-                    "Bagaj muhafazası ve 24 saat açık resepsiyon tesisin diğer olanakları arasında yer alıyor.");
+            cityOrHotelDescription.setText("All rooms have direct telephone, minibar, tv, central air conditioning, shower, bathtub, wc, hair dryer, toilet phone, fire alarm system, sound and heat proof windows. There is a 24 hour multilingual newspaper There are central air conditioning and heating, tv, wireless internet, cafe, ironing, dry cleaning, safe box, 24 hour room service, generator, services are available. The hotel also offers breakfast room, service and Turkish and International cuisine.");
             cityPopulationText.setText("216");
             cityAltitudeText.setText("2006");
             annualTouristVisitText.setText("243₺");
@@ -1011,10 +898,7 @@ public class CityAndHotelSelectionController implements Initializable {
 
             selectedHotelName = "Figen Hotel";
             cityOrHotelName.setText(selectedHotelName);
-            cityOrHotelDescription.setText("Ramada Plaza İzmir; İzmir, Kahramanlar bölgesinde hizmet vermektedir. Tesis Adnan Menderes Havalimanına 26 km, İzmir Otogarına 7 km, şehir merkezine 2 km uzaklıktadır.\n" +
-                    "Tesis, güler yüzlü personeli ve hizmet anlayışı ile misafirlerine konforlu bir konaklama imkanı sunuyor. \n" +
-                    "Tesisin kalite ve konforu bir araya getiren odalarında; kasa, LCD TV, uydu yayını, minibar ve çay-kahve makinesi bulunuyor.\n" +
-                    "Bagaj muhafazası ve 24 saat açık resepsiyon tesisin diğer olanakları arasında yer alıyor.");
+            cityOrHotelDescription.setText("All rooms have direct telephone, minibar, tv, central air conditioning, shower, bathtub, wc, hair dryer, toilet phone, fire alarm system, sound and heat proof windows. There is a 24 hour multilingual newspaper There are central air conditioning and heating, tv, wireless internet, cafe, ironing, dry cleaning, safe box, 24 hour room service, generator, services are available. The hotel also offers breakfast room, service and Turkish and International cuisine.");
             cityPopulationText.setText("47");
             cityAltitudeText.setText("2014");
             annualTouristVisitText.setText("143₺");
@@ -1024,10 +908,7 @@ public class CityAndHotelSelectionController implements Initializable {
 
             selectedHotelName = "Grand Ece Hotel";
             cityOrHotelName.setText(selectedHotelName);
-            cityOrHotelDescription.setText("Ramada Plaza İzmir; İzmir, Kahramanlar bölgesinde hizmet vermektedir. Tesis Adnan Menderes Havalimanına 26 km, İzmir Otogarına 7 km, şehir merkezine 2 km uzaklıktadır.\n" +
-                    "Tesis, güler yüzlü personeli ve hizmet anlayışı ile misafirlerine konforlu bir konaklama imkanı sunuyor. \n" +
-                    "Tesisin kalite ve konforu bir araya getiren odalarında; kasa, LCD TV, uydu yayını, minibar ve çay-kahve makinesi bulunuyor.\n" +
-                    "Bagaj muhafazası ve 24 saat açık resepsiyon tesisin diğer olanakları arasında yer alıyor.");
+            cityOrHotelDescription.setText("All rooms have direct telephone, minibar, tv, central air conditioning, shower, bathtub, wc, hair dryer, toilet phone, fire alarm system, sound and heat proof windows. There is a 24 hour multilingual newspaper There are central air conditioning and heating, tv, wireless internet, cafe, ironing, dry cleaning, safe box, 24 hour room service, generator, services are available. The hotel also offers breakfast room, service and Turkish and International cuisine.");
             cityPopulationText.setText("51");
             cityAltitudeText.setText("2012");
             annualTouristVisitText.setText("114₺");
@@ -1037,10 +918,7 @@ public class CityAndHotelSelectionController implements Initializable {
 
             selectedHotelName = "Flora Hotel";
             cityOrHotelName.setText(selectedHotelName);
-            cityOrHotelDescription.setText("Ramada Plaza İzmir; İzmir, Kahramanlar bölgesinde hizmet vermektedir. Tesis Adnan Menderes Havalimanına 26 km, İzmir Otogarına 7 km, şehir merkezine 2 km uzaklıktadır.\n" +
-                    "Tesis, güler yüzlü personeli ve hizmet anlayışı ile misafirlerine konforlu bir konaklama imkanı sunuyor. \n" +
-                    "Tesisin kalite ve konforu bir araya getiren odalarında; kasa, LCD TV, uydu yayını, minibar ve çay-kahve makinesi bulunuyor.\n" +
-                    "Bagaj muhafazası ve 24 saat açık resepsiyon tesisin diğer olanakları arasında yer alıyor.");
+            cityOrHotelDescription.setText("All rooms have direct telephone, minibar, tv, central air conditioning, shower, bathtub, wc, hair dryer, toilet phone, fire alarm system, sound and heat proof windows. There is a 24 hour multilingual newspaper There are central air conditioning and heating, tv, wireless internet, cafe, ironing, dry cleaning, safe box, 24 hour room service, generator, services are available. The hotel also offers breakfast room, service and Turkish and International cuisine.");
             cityPopulationText.setText("39");
             cityAltitudeText.setText("2015");
             annualTouristVisitText.setText("109₺");
@@ -1050,10 +928,7 @@ public class CityAndHotelSelectionController implements Initializable {
 
             selectedHotelName = "Troia Tusan Hotel";
             cityOrHotelName.setText(selectedHotelName);
-            cityOrHotelDescription.setText("Ramada Plaza İzmir; İzmir, Kahramanlar bölgesinde hizmet vermektedir. Tesis Adnan Menderes Havalimanına 26 km, İzmir Otogarına 7 km, şehir merkezine 2 km uzaklıktadır.\n" +
-                    "Tesis, güler yüzlü personeli ve hizmet anlayışı ile misafirlerine konforlu bir konaklama imkanı sunuyor. \n" +
-                    "Tesisin kalite ve konforu bir araya getiren odalarında; kasa, LCD TV, uydu yayını, minibar ve çay-kahve makinesi bulunuyor.\n" +
-                    "Bagaj muhafazası ve 24 saat açık resepsiyon tesisin diğer olanakları arasında yer alıyor.");
+            cityOrHotelDescription.setText("All rooms have direct telephone, minibar, tv, central air conditioning, shower, bathtub, wc, hair dryer, toilet phone, fire alarm system, sound and heat proof windows. There is a 24 hour multilingual newspaper There are central air conditioning and heating, tv, wireless internet, cafe, ironing, dry cleaning, safe box, 24 hour room service, generator, services are available. The hotel also offers breakfast room, service and Turkish and International cuisine.");
             cityPopulationText.setText("132");
             cityAltitudeText.setText("2007");
             annualTouristVisitText.setText("199₺");
@@ -1063,10 +938,7 @@ public class CityAndHotelSelectionController implements Initializable {
 
             selectedHotelName = "Vitis Hotel";
             cityOrHotelName.setText(selectedHotelName);
-            cityOrHotelDescription.setText("Ramada Plaza İzmir; İzmir, Kahramanlar bölgesinde hizmet vermektedir. Tesis Adnan Menderes Havalimanına 26 km, İzmir Otogarına 7 km, şehir merkezine 2 km uzaklıktadır.\n" +
-                    "Tesis, güler yüzlü personeli ve hizmet anlayışı ile misafirlerine konforlu bir konaklama imkanı sunuyor. \n" +
-                    "Tesisin kalite ve konforu bir araya getiren odalarında; kasa, LCD TV, uydu yayını, minibar ve çay-kahve makinesi bulunuyor.\n" +
-                    "Bagaj muhafazası ve 24 saat açık resepsiyon tesisin diğer olanakları arasında yer alıyor.");
+            cityOrHotelDescription.setText("All rooms have direct telephone, minibar, tv, central air conditioning, shower, bathtub, wc, hair dryer, toilet phone, fire alarm system, sound and heat proof windows. There is a 24 hour multilingual newspaper There are central air conditioning and heating, tv, wireless internet, cafe, ironing, dry cleaning, safe box, 24 hour room service, generator, services are available. The hotel also offers breakfast room, service and Turkish and International cuisine.");
             cityPopulationText.setText("67");
             cityAltitudeText.setText("2004");
             annualTouristVisitText.setText("116₺");
@@ -1076,10 +948,7 @@ public class CityAndHotelSelectionController implements Initializable {
 
             selectedHotelName = "Maidos Hotel";
             cityOrHotelName.setText(selectedHotelName);
-            cityOrHotelDescription.setText("Ramada Plaza İzmir; İzmir, Kahramanlar bölgesinde hizmet vermektedir. Tesis Adnan Menderes Havalimanına 26 km, İzmir Otogarına 7 km, şehir merkezine 2 km uzaklıktadır.\n" +
-                    "Tesis, güler yüzlü personeli ve hizmet anlayışı ile misafirlerine konforlu bir konaklama imkanı sunuyor. \n" +
-                    "Tesisin kalite ve konforu bir araya getiren odalarında; kasa, LCD TV, uydu yayını, minibar ve çay-kahve makinesi bulunuyor.\n" +
-                    "Bagaj muhafazası ve 24 saat açık resepsiyon tesisin diğer olanakları arasında yer alıyor.");
+            cityOrHotelDescription.setText("All rooms have direct telephone, minibar, tv, central air conditioning, shower, bathtub, wc, hair dryer, toilet phone, fire alarm system, sound and heat proof windows. There is a 24 hour multilingual newspaper There are central air conditioning and heating, tv, wireless internet, cafe, ironing, dry cleaning, safe box, 24 hour room service, generator, services are available. The hotel also offers breakfast room, service and Turkish and International cuisine.");
             cityPopulationText.setText("134");
             cityAltitudeText.setText("2011");
             annualTouristVisitText.setText("202₺");
@@ -1089,10 +958,7 @@ public class CityAndHotelSelectionController implements Initializable {
 
             selectedHotelName = "Iola Hotel";
             cityOrHotelName.setText(selectedHotelName);
-            cityOrHotelDescription.setText("Ramada Plaza İzmir; İzmir, Kahramanlar bölgesinde hizmet vermektedir. Tesis Adnan Menderes Havalimanına 26 km, İzmir Otogarına 7 km, şehir merkezine 2 km uzaklıktadır.\n" +
-                    "Tesis, güler yüzlü personeli ve hizmet anlayışı ile misafirlerine konforlu bir konaklama imkanı sunuyor. \n" +
-                    "Tesisin kalite ve konforu bir araya getiren odalarında; kasa, LCD TV, uydu yayını, minibar ve çay-kahve makinesi bulunuyor.\n" +
-                    "Bagaj muhafazası ve 24 saat açık resepsiyon tesisin diğer olanakları arasında yer alıyor.");
+            cityOrHotelDescription.setText("All rooms have direct telephone, minibar, tv, central air conditioning, shower, bathtub, wc, hair dryer, toilet phone, fire alarm system, sound and heat proof windows. There is a 24 hour multilingual newspaper There are central air conditioning and heating, tv, wireless internet, cafe, ironing, dry cleaning, safe box, 24 hour room service, generator, services are available. The hotel also offers breakfast room, service and Turkish and International cuisine.");
             cityPopulationText.setText("72");
             cityAltitudeText.setText("2010");
             annualTouristVisitText.setText("145₺");
@@ -1104,10 +970,7 @@ public class CityAndHotelSelectionController implements Initializable {
 
             selectedHotelName = "Efe Hotel";
             cityOrHotelName.setText(selectedHotelName);
-            cityOrHotelDescription.setText("Ramada Plaza İzmir; İzmir, Kahramanlar bölgesinde hizmet vermektedir. Tesis Adnan Menderes Havalimanına 26 km, İzmir Otogarına 7 km, şehir merkezine 2 km uzaklıktadır.\n" +
-                    "Tesis, güler yüzlü personeli ve hizmet anlayışı ile misafirlerine konforlu bir konaklama imkanı sunuyor. \n" +
-                    "Tesisin kalite ve konforu bir araya getiren odalarında; kasa, LCD TV, uydu yayını, minibar ve çay-kahve makinesi bulunuyor.\n" +
-                    "Bagaj muhafazası ve 24 saat açık resepsiyon tesisin diğer olanakları arasında yer alıyor.");
+            cityOrHotelDescription.setText("All rooms have direct telephone, minibar, tv, central air conditioning, shower, bathtub, wc, hair dryer, toilet phone, fire alarm system, sound and heat proof windows. There is a 24 hour multilingual newspaper There are central air conditioning and heating, tv, wireless internet, cafe, ironing, dry cleaning, safe box, 24 hour room service, generator, services are available. The hotel also offers breakfast room, service and Turkish and International cuisine.");
             cityPopulationText.setText("55");
             cityAltitudeText.setText("2014");
             annualTouristVisitText.setText("130₺");
@@ -1117,10 +980,7 @@ public class CityAndHotelSelectionController implements Initializable {
 
             selectedHotelName = "Selimiye Hotel";
             cityOrHotelName.setText(selectedHotelName);
-            cityOrHotelDescription.setText("Ramada Plaza İzmir; İzmir, Kahramanlar bölgesinde hizmet vermektedir. Tesis Adnan Menderes Havalimanına 26 km, İzmir Otogarına 7 km, şehir merkezine 2 km uzaklıktadır.\n" +
-                    "Tesis, güler yüzlü personeli ve hizmet anlayışı ile misafirlerine konforlu bir konaklama imkanı sunuyor. \n" +
-                    "Tesisin kalite ve konforu bir araya getiren odalarında; kasa, LCD TV, uydu yayını, minibar ve çay-kahve makinesi bulunuyor.\n" +
-                    "Bagaj muhafazası ve 24 saat açık resepsiyon tesisin diğer olanakları arasında yer alıyor.");
+            cityOrHotelDescription.setText("All rooms have direct telephone, minibar, tv, central air conditioning, shower, bathtub, wc, hair dryer, toilet phone, fire alarm system, sound and heat proof windows. There is a 24 hour multilingual newspaper There are central air conditioning and heating, tv, wireless internet, cafe, ironing, dry cleaning, safe box, 24 hour room service, generator, services are available. The hotel also offers breakfast room, service and Turkish and International cuisine.");
             cityPopulationText.setText("62");
             cityAltitudeText.setText("2013");
             annualTouristVisitText.setText("123₺");
@@ -1130,10 +990,7 @@ public class CityAndHotelSelectionController implements Initializable {
 
             selectedHotelName = "Edrin Hotel";
             cityOrHotelName.setText(selectedHotelName);
-            cityOrHotelDescription.setText("Ramada Plaza İzmir; İzmir, Kahramanlar bölgesinde hizmet vermektedir. Tesis Adnan Menderes Havalimanına 26 km, İzmir Otogarına 7 km, şehir merkezine 2 km uzaklıktadır.\n" +
-                    "Tesis, güler yüzlü personeli ve hizmet anlayışı ile misafirlerine konforlu bir konaklama imkanı sunuyor. \n" +
-                    "Tesisin kalite ve konforu bir araya getiren odalarında; kasa, LCD TV, uydu yayını, minibar ve çay-kahve makinesi bulunuyor.\n" +
-                    "Bagaj muhafazası ve 24 saat açık resepsiyon tesisin diğer olanakları arasında yer alıyor.");
+            cityOrHotelDescription.setText("All rooms have direct telephone, minibar, tv, central air conditioning, shower, bathtub, wc, hair dryer, toilet phone, fire alarm system, sound and heat proof windows. There is a 24 hour multilingual newspaper There are central air conditioning and heating, tv, wireless internet, cafe, ironing, dry cleaning, safe box, 24 hour room service, generator, services are available. The hotel also offers breakfast room, service and Turkish and International cuisine.");
             cityPopulationText.setText("86");
             cityAltitudeText.setText("2017");
             annualTouristVisitText.setText("197₺");
@@ -1143,10 +1000,7 @@ public class CityAndHotelSelectionController implements Initializable {
 
             selectedHotelName = "Kalevera Hotel";
             cityOrHotelName.setText(selectedHotelName);
-            cityOrHotelDescription.setText("Ramada Plaza İzmir; İzmir, Kahramanlar bölgesinde hizmet vermektedir. Tesis Adnan Menderes Havalimanına 26 km, İzmir Otogarına 7 km, şehir merkezine 2 km uzaklıktadır.\n" +
-                    "Tesis, güler yüzlü personeli ve hizmet anlayışı ile misafirlerine konforlu bir konaklama imkanı sunuyor. \n" +
-                    "Tesisin kalite ve konforu bir araya getiren odalarında; kasa, LCD TV, uydu yayını, minibar ve çay-kahve makinesi bulunuyor.\n" +
-                    "Bagaj muhafazası ve 24 saat açık resepsiyon tesisin diğer olanakları arasında yer alıyor.");
+            cityOrHotelDescription.setText("All rooms have direct telephone, minibar, tv, central air conditioning, shower, bathtub, wc, hair dryer, toilet phone, fire alarm system, sound and heat proof windows. There is a 24 hour multilingual newspaper There are central air conditioning and heating, tv, wireless internet, cafe, ironing, dry cleaning, safe box, 24 hour room service, generator, services are available. The hotel also offers breakfast room, service and Turkish and International cuisine.");
             cityPopulationText.setText("68");
             cityAltitudeText.setText("2005");
             annualTouristVisitText.setText("115₺");
@@ -1156,10 +1010,7 @@ public class CityAndHotelSelectionController implements Initializable {
 
             selectedHotelName = "Ramada Hotel";
             cityOrHotelName.setText(selectedHotelName);
-            cityOrHotelDescription.setText("Ramada Plaza İzmir; İzmir, Kahramanlar bölgesinde hizmet vermektedir. Tesis Adnan Menderes Havalimanına 26 km, İzmir Otogarına 7 km, şehir merkezine 2 km uzaklıktadır.\n" +
-                    "Tesis, güler yüzlü personeli ve hizmet anlayışı ile misafirlerine konforlu bir konaklama imkanı sunuyor. \n" +
-                    "Tesisin kalite ve konforu bir araya getiren odalarında; kasa, LCD TV, uydu yayını, minibar ve çay-kahve makinesi bulunuyor.\n" +
-                    "Bagaj muhafazası ve 24 saat açık resepsiyon tesisin diğer olanakları arasında yer alıyor.");
+            cityOrHotelDescription.setText("All rooms have direct telephone, minibar, tv, central air conditioning, shower, bathtub, wc, hair dryer, toilet phone, fire alarm system, sound and heat proof windows. There is a 24 hour multilingual newspaper There are central air conditioning and heating, tv, wireless internet, cafe, ironing, dry cleaning, safe box, 24 hour room service, generator, services are available. The hotel also offers breakfast room, service and Turkish and International cuisine.");
             cityPopulationText.setText("52");
             cityAltitudeText.setText("2009");
             annualTouristVisitText.setText("110₺");
@@ -1169,10 +1020,7 @@ public class CityAndHotelSelectionController implements Initializable {
 
             selectedHotelName = "Şimsek Hotel";
             cityOrHotelName.setText(selectedHotelName);
-            cityOrHotelDescription.setText("Ramada Plaza İzmir; İzmir, Kahramanlar bölgesinde hizmet vermektedir. Tesis Adnan Menderes Havalimanına 26 km, İzmir Otogarına 7 km, şehir merkezine 2 km uzaklıktadır.\n" +
-                    "Tesis, güler yüzlü personeli ve hizmet anlayışı ile misafirlerine konforlu bir konaklama imkanı sunuyor. \n" +
-                    "Tesisin kalite ve konforu bir araya getiren odalarında; kasa, LCD TV, uydu yayını, minibar ve çay-kahve makinesi bulunuyor.\n" +
-                    "Bagaj muhafazası ve 24 saat açık resepsiyon tesisin diğer olanakları arasında yer alıyor.");
+            cityOrHotelDescription.setText("All rooms have direct telephone, minibar, tv, central air conditioning, shower, bathtub, wc, hair dryer, toilet phone, fire alarm system, sound and heat proof windows. There is a 24 hour multilingual newspaper There are central air conditioning and heating, tv, wireless internet, cafe, ironing, dry cleaning, safe box, 24 hour room service, generator, services are available. The hotel also offers breakfast room, service and Turkish and International cuisine.");
             cityPopulationText.setText("28");
             cityAltitudeText.setText("2017");
             annualTouristVisitText.setText("101₺");
@@ -1182,10 +1030,7 @@ public class CityAndHotelSelectionController implements Initializable {
 
             selectedHotelName = "Balta Hotel";
             cityOrHotelName.setText(selectedHotelName);
-            cityOrHotelDescription.setText("Ramada Plaza İzmir; İzmir, Kahramanlar bölgesinde hizmet vermektedir. Tesis Adnan Menderes Havalimanına 26 km, İzmir Otogarına 7 km, şehir merkezine 2 km uzaklıktadır.\n" +
-                    "Tesis, güler yüzlü personeli ve hizmet anlayışı ile misafirlerine konforlu bir konaklama imkanı sunuyor. \n" +
-                    "Tesisin kalite ve konforu bir araya getiren odalarında; kasa, LCD TV, uydu yayını, minibar ve çay-kahve makinesi bulunuyor.\n" +
-                    "Bagaj muhafazası ve 24 saat açık resepsiyon tesisin diğer olanakları arasında yer alıyor.");
+            cityOrHotelDescription.setText("All rooms have direct telephone, minibar, tv, central air conditioning, shower, bathtub, wc, hair dryer, toilet phone, fire alarm system, sound and heat proof windows. There is a 24 hour multilingual newspaper There are central air conditioning and heating, tv, wireless internet, cafe, ironing, dry cleaning, safe box, 24 hour room service, generator, services are available. The hotel also offers breakfast room, service and Turkish and International cuisine.");
             cityPopulationText.setText("36");
             cityAltitudeText.setText("2016");
             annualTouristVisitText.setText("109₺");
@@ -1195,10 +1040,7 @@ public class CityAndHotelSelectionController implements Initializable {
 
             selectedHotelName = "Margi Hotel";
             cityOrHotelName.setText(selectedHotelName);
-            cityOrHotelDescription.setText("Ramada Plaza İzmir; İzmir, Kahramanlar bölgesinde hizmet vermektedir. Tesis Adnan Menderes Havalimanına 26 km, İzmir Otogarına 7 km, şehir merkezine 2 km uzaklıktadır.\n" +
-                    "Tesis, güler yüzlü personeli ve hizmet anlayışı ile misafirlerine konforlu bir konaklama imkanı sunuyor. \n" +
-                    "Tesisin kalite ve konforu bir araya getiren odalarında; kasa, LCD TV, uydu yayını, minibar ve çay-kahve makinesi bulunuyor.\n" +
-                    "Bagaj muhafazası ve 24 saat açık resepsiyon tesisin diğer olanakları arasında yer alıyor.");
+            cityOrHotelDescription.setText("All rooms have direct telephone, minibar, tv, central air conditioning, shower, bathtub, wc, hair dryer, toilet phone, fire alarm system, sound and heat proof windows. There is a 24 hour multilingual newspaper There are central air conditioning and heating, tv, wireless internet, cafe, ironing, dry cleaning, safe box, 24 hour room service, generator, services are available. The hotel also offers breakfast room, service and Turkish and International cuisine.");
             cityPopulationText.setText("221");
             cityAltitudeText.setText("2017");
             annualTouristVisitText.setText("216₺");
@@ -1208,10 +1050,7 @@ public class CityAndHotelSelectionController implements Initializable {
 
             selectedHotelName = "Saros Hotel";
             cityOrHotelName.setText(selectedHotelName);
-            cityOrHotelDescription.setText("Ramada Plaza İzmir; İzmir, Kahramanlar bölgesinde hizmet vermektedir. Tesis Adnan Menderes Havalimanına 26 km, İzmir Otogarına 7 km, şehir merkezine 2 km uzaklıktadır.\n" +
-                    "Tesis, güler yüzlü personeli ve hizmet anlayışı ile misafirlerine konforlu bir konaklama imkanı sunuyor. \n" +
-                    "Tesisin kalite ve konforu bir araya getiren odalarında; kasa, LCD TV, uydu yayını, minibar ve çay-kahve makinesi bulunuyor.\n" +
-                    "Bagaj muhafazası ve 24 saat açık resepsiyon tesisin diğer olanakları arasında yer alıyor.");
+            cityOrHotelDescription.setText("All rooms have direct telephone, minibar, tv, central air conditioning, shower, bathtub, wc, hair dryer, toilet phone, fire alarm system, sound and heat proof windows. There is a 24 hour multilingual newspaper There are central air conditioning and heating, tv, wireless internet, cafe, ironing, dry cleaning, safe box, 24 hour room service, generator, services are available. The hotel also offers breakfast room, service and Turkish and International cuisine.");
             cityPopulationText.setText("120");
             cityAltitudeText.setText("2014");
             annualTouristVisitText.setText("208₺");
@@ -1219,5 +1058,3 @@ public class CityAndHotelSelectionController implements Initializable {
         }
     }
 }
-
-

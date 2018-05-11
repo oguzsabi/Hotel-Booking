@@ -8,6 +8,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ListView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
@@ -19,6 +20,7 @@ import java.util.ResourceBundle;
 
 public class RemoveUserController implements Initializable {
     @FXML ListView<String> memberList = new ListView<>();
+    @FXML CheckBox iAmSure;
     private ObservableList<String> memberObservableList;
 
     public void initialize(URL url, ResourceBundle resourceBundle){
@@ -38,9 +40,13 @@ public class RemoveUserController implements Initializable {
 
     public void removeButtonClicked(MouseEvent mouseEvent) throws IOException {
         if(!memberObservableList.isEmpty()){
-            String memberInformation = memberList.getSelectionModel().getSelectedItem().toString();
-            Save.removeMemberFromMemberList(memberInformation);
-            memberList.getItems().remove(memberList.getSelectionModel().getSelectedItem());
+            if(iAmSure.isSelected()) {
+                String memberInformation = memberList.getSelectionModel().getSelectedItem().toString();
+                Save.removeMemberFromMemberList(memberInformation);
+                memberList.getItems().remove(memberList.getSelectionModel().getSelectedItem());
+            }
+            else
+                AlertBox.display("Are You Sure?","You have to check the box to remove users!");
         }
     }
 }

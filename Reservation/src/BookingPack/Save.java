@@ -23,11 +23,13 @@ public class Save {
     static private File cityInformation = new File("cityInformation.txt");
     static private File tempCityInformation = new File("tempCityInformation.txt");
     static private File tempHotels = new File("tempHotels.txt");
+    static private File tempReservations = new File("tempReservations.txt");
     static private File hotelNames;
     static private File hotelNamesThree;
     static private File hotelNamesFive;
     static private File hotelInfoFive;
     static private File hotelInfoThree;
+    static private File reservations;
     static private String username, password;
     static private NumberFormat numberFormat = NumberFormat.getInstance(Locale.US);
     static private String cityDescription = "City Information";
@@ -534,6 +536,95 @@ public class Save {
         }
     }
 
+    public static void removingReservations(String fileName, String hotelName) throws IOException{
+        reservations = new File(fileName);
+        BufferedReader reader = new BufferedReader(new FileReader(reservations));
+        BufferedWriter writer = new BufferedWriter(new FileWriter(tempReservations));
+
+        try {
+            readingFile = new Scanner(reservations);
+        }
+        catch (FileNotFoundException e) {
+            System.err.println(e.getMessage());
+        }
+
+        if(reservations.exists()) {
+            String lineToRemove = "";
+            int flag = 0;
+            boolean checker = false;
+            String currentLine;
+
+            while ((currentLine = reader.readLine()) != null) {
+                // trim newline when comparing with lineToRemove
+                String trimmedLine = currentLine.trim();
+
+                String line = readingFile.nextLine();
+                if (line.equals('☭'+hotelName))
+                    checker = true;
+
+                if (line.length() > 0 && checker) {
+                    if (line.charAt(0) == '☭') {
+                        flag++;
+                    }
+                    lineToRemove = line;
+                }
+
+                if (flag < 5) {
+                    if (trimmedLine.equals(lineToRemove) && checker) continue;
+                }
+                writer.write(currentLine + System.getProperty("line.separator"));
+            }
+
+            writer.close();
+            reader.close();
+
+            BufferedReader tempReservationsReader = new BufferedReader(new FileReader(tempReservations));
+            BufferedWriter backToReservationsWriter = new BufferedWriter(new FileWriter(reservations));
+
+            while ((currentLine = tempReservationsReader.readLine()) != null) {
+                backToReservationsWriter.write(currentLine + System.getProperty("line.separator"));
+            }
+
+            tempReservationsReader.close();
+            backToReservationsWriter.close();
+        }
+    }
+
+    public static void addingReservationInformation(File file, String hotelName,Text checkin, Text checkout, Text price){
+        boolean hotelNameCheck = false;
+        int hammerCounter = 0;
+
+        if(file.exists()) {
+            try {
+                readingFile = new Scanner(file);
+            } catch (FileNotFoundException e) {
+                AlertBox.display("File Not Found Error!", "You first need to create such a file to access it!");
+            }
+
+            while (readingFile.hasNext()) {
+                String line = readingFile.nextLine();
+                if (line.equals('☭' + hotelName))
+                    hotelNameCheck = true;
+
+                if (line.charAt(0) == '☭' && hotelNameCheck) {
+                    hammerCounter++;
+                }
+
+                switch (hammerCounter) {
+                    case 2:
+                        checkin.setText(line.substring(1));
+                        break;
+                    case 3:
+                        checkout.setText(line.substring(1));
+                        break;
+                    case 4:
+                        price.setText(line.substring(1));
+                        break;
+                }
+            }
+        }
+    }
+
     public static void addingToMemberList(String username, String password){
         try {
             memberListFW = new FileWriter("memberList.txt",true);
@@ -840,6 +931,34 @@ public class Save {
 
         tempCityInformationReader.close();
         backToCityInformationWriter.close();
+    }
+
+    public static void addingReservations(File file, String hotelName, String checkIn, String checkOut, String price){
+        try {
+            memberListFW = new FileWriter(file.getName(),true);
+            memberListBW = new BufferedWriter(memberListFW);
+            memberListPW = new PrintWriter(memberListBW);
+            memberListFW.write((char)9773 + hotelName + "\n" + (char)9773 + checkIn + "\n" + (char)9773 + checkOut + "\n" + (char)9773 + price + "\n");
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+        finally {
+            try {
+
+                if (memberListBW != null)
+                    memberListBW.close();
+
+                if (memberListFW != null)
+                    memberListFW.close();
+
+                if(memberListPW != null)
+                    memberListPW.close();
+
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        }
     }
 
     public static void addingHotelThreeStars(File file, String hotelName, String hotelDescription, int numberOfStars, int numberOfRooms, int yearOfBuilt, int nightlyCost, int singleRoomPrice, int doubleRoomPrice, int tripleRoomPrice){

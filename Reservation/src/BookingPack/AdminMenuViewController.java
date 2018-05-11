@@ -1,18 +1,15 @@
 package BookingPack;
 
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 
 public class AdminMenuViewController implements AddableScene, RemovableScene {
-    @FXML private Button backButton;
     static boolean fromAdminMenuView = false;
 
     public void backButtonClicked(MouseEvent mouseEvent) throws IOException {
@@ -24,25 +21,15 @@ public class AdminMenuViewController implements AddableScene, RemovableScene {
         window.show();
     }
 
-    public void addUserButtonClicked(MouseEvent mouseEvent) throws IOException{
-        /*fromAdminMenuView = true;
-        SignInController.fromSignInView = false;
-        Parent signUpMenuParent = FXMLLoader.load(getClass().getResource("SignUpView.fxml"));
-        Scene signUpScene = new Scene(signUpMenuParent);
+    public void adminManualButtonClicked(MouseEvent mouseEvent) throws IOException{
+        addingScene(mouseEvent,"AdminManualView.fxml");
+    }
 
-        Stage window = (Stage)((Node)mouseEvent.getSource()).getScene().getWindow();
-        window.setScene(signUpScene);
-        window.show();*/
+    public void addUserButtonClicked(MouseEvent mouseEvent) throws IOException{
         addingScene(mouseEvent,"SignUpView.fxml");
     }
 
     public void removeUserButtonClicked(MouseEvent mouseEvent) throws IOException {
-        /*Parent signUpMenuParent = FXMLLoader.load(getClass().getResource("RemoveUserView.fxml"));
-        Scene signUpScene = new Scene(signUpMenuParent);
-
-        Stage window = (Stage)((Node)mouseEvent.getSource()).getScene().getWindow();
-        window.setScene(signUpScene);
-        window.show();*/
         removingScene(mouseEvent,"RemoveUserView.fxml");
     }
 

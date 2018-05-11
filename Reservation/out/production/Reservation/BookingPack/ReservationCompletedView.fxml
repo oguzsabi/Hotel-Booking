@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="224.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="BookingPack.ReservationCompletedController">
+   <children>
+      <Text fill="#55a84b" layoutX="14.0" layoutY="41.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Your reservation has been successfully completed!" wrappingWidth="422.14453125">
+         <font>
+            <Font size="19.0" />
+         </font>
+      </Text>
+      <Text layoutX="14.0" layoutY="79.0" strokeType="OUTSIDE" strokeWidth="0.0" text="An SMS has been sent to +9058438753839843">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Text>
+      <ImageView fitHeight="150.0" fitWidth="142.0" layoutX="444.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@Check%20Mark.png" />
+         </image>
+      </ImageView>
+      <Text layoutX="14.0" layoutY="110.0" strokeType="OUTSIDE" strokeWidth="0.0" text="An email has been sent to asdjashd@sadka.com">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Text>
+      <Text layoutX="14.0" layoutY="150.0" strokeType="OUTSIDE" strokeWidth="0.0" text="(You can see your other reservations in 'My Reservations' section.)" />
+      <Button layoutX="76.0" layoutY="177.0" mnemonicParsing="false" onMouseClicked="#exitTheProgramButtonClicked" prefHeight="25.0" prefWidth="165.0" text="Exit the program">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></Button>
+      <Button layoutX="362.0" layoutY="177.0" mnemonicParsing="false" onMouseClicked="#goBackToLogInScreenButtonClicked" text="Go back to the log in screen">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></Button>
+   </children>
+</AnchorPane>

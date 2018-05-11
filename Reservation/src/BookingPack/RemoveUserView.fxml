@@ -9,14 +9,24 @@
 
 <AnchorPane prefHeight="337.0" prefWidth="447.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="BookingPack.RemoveUserController">
    <children>
-      <ListView fx:id="memberList" layoutY="23.0" prefHeight="377.0" prefWidth="297.0" />
-      <Button layoutX="319.0" layoutY="117.0" mnemonicParsing="false" onMouseClicked="#removeButtonClicked" prefHeight="67.0" prefWidth="92.0" text="Remove" />
-      <Button layoutX="319.0" layoutY="233.0" mnemonicParsing="false" onMouseClicked="#backButtonClicked" prefHeight="67.0" prefWidth="92.0" text="Back" />
+      <ListView fx:id="memberList" layoutY="23.0" prefHeight="377.0" prefWidth="297.0">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></ListView>
+      <Button layoutX="319.0" layoutY="117.0" mnemonicParsing="false" onMouseClicked="#removeButtonClicked" prefHeight="67.0" prefWidth="92.0" text="Remove">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></Button>
+      <Button layoutX="319.0" layoutY="253.0" mnemonicParsing="false" onMouseClicked="#backButtonClicked" prefHeight="67.0" prefWidth="92.0" text="Back">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></Button>
       <Label layoutY="6.0" text="Username">
          <padding>
             <Insets left="10.0" />
          </padding>
       </Label>
       <Label layoutX="98.0" layoutY="6.0" text="Password" />
+      <CheckBox fx:id="iAmSure" layoutX="329.0" layoutY="203.0" mnemonicParsing="false" text="I Am Sure" />
    </children>
 </AnchorPane>

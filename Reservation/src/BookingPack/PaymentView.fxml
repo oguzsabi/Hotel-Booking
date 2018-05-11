@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="412.0" prefWidth="600.0" style="-fx-background-color: #7fb3c6;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="BookingPack.PaymentController">
+   <children>
+      <Button layoutX="511.0" layoutY="342.0" mnemonicParsing="false" onMouseClicked="#payButtonClicked" prefHeight="45.0" prefWidth="75.0" text="Pay">
+         <effect>
+            <InnerShadow />
+         </effect>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></Button>
+      <RadioButton fx:id="masterCardButton" layoutX="188.0" layoutY="33.0" mnemonicParsing="false" text="Master Card">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></RadioButton>
+      <RadioButton fx:id="visaCardButton" layoutX="290.0" layoutY="33.0" mnemonicParsing="false" text="Visa">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></RadioButton>
+      <RadioButton fx:id="discoverCardButton" layoutX="345.0" layoutY="33.0" mnemonicParsing="false" text="Discover">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></RadioButton>
+      <TextField fx:id="creditCardNumber" layoutX="188.0" layoutY="81.0" prefHeight="25.0" prefWidth="181.0" promptText="1111/2222/3333/4444">
+         <effect>
+            <InnerShadow />
+         </effect>
+         <cursor>
+            <Cursor fx:constant="TEXT" />
+         </cursor></TextField>
+      <Text layoutX="42.0" layoutY="98.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Credit Card Number" />
+      <TextField fx:id="expiryDateMonth" layoutX="188.0" layoutY="129.0" prefHeight="25.0" prefWidth="43.0" promptText="MM">
+         <effect>
+            <InnerShadow />
+         </effect>
+         <cursor>
+            <Cursor fx:constant="TEXT" />
+         </cursor></TextField>
+      <Text layoutX="42.0" layoutY="146.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Expiry Date" />
+      <Separator layoutX="235.0" layoutY="133.0" orientation="VERTICAL" prefHeight="17.0" prefWidth="9.0" rotate="18.4">
+         <effect>
+            <InnerShadow />
+         </effect></Separator>
+      <TextField fx:id="expiryDateYear" layoutX="247.0" layoutY="129.0" prefHeight="25.0" prefWidth="43.0" promptText="YY">
+         <effect>
+            <InnerShadow />
+         </effect>
+         <cursor>
+            <Cursor fx:constant="TEXT" />
+         </cursor></TextField>
+      <TextField fx:id="firstName" layoutX="188.0" layoutY="177.0" prefHeight="25.0" prefWidth="181.0" promptText="Jesse">
+         <effect>
+            <InnerShadow />
+         </effect>
+         <cursor>
+            <Cursor fx:constant="TEXT" />
+         </cursor></TextField>
+      <Text layoutX="42.0" layoutY="193.0" strokeType="OUTSIDE" strokeWidth="0.0" text="First Name" />
+      <TextField fx:id="lastName" layoutX="188.0" layoutY="225.0" prefHeight="25.0" prefWidth="181.0" promptText="Pinkman">
+         <effect>
+            <InnerShadow />
+         </effect>
+         <cursor>
+            <Cursor fx:constant="TEXT" />
+         </cursor></TextField>
+      <Text layoutX="42.0" layoutY="242.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Last Name" />
+      <TextField fx:id="phoneNumber" layoutX="188.0" layoutY="273.0" prefHeight="25.0" prefWidth="181.0" promptText="+905057437699">
+         <effect>
+            <InnerShadow />
+         </effect>
+         <cursor>
+            <Cursor fx:constant="TEXT" />
+         </cursor></TextField>
+      <TextField fx:id="email" layoutX="188.0" layoutY="321.0" prefHeight="25.0" prefWidth="181.0" promptText="example_mail@gmail.com">
+         <effect>
+            <InnerShadow />
+         </effect>
+         <cursor>
+            <Cursor fx:constant="TEXT" />
+         </cursor></TextField>
+      <Text layoutX="42.0" layoutY="290.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Phone Number" />
+      <Text layoutX="42.0" layoutY="338.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Email" />
+      <Text layoutX="42.0" layoutY="46.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Payment Type" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#e7e9eb" height="216.0" layoutX="386.0" layoutY="81.0" stroke="BLACK" strokeType="INSIDE" width="200.0">
+         <effect>
+            <InnerShadow />
+         </effect></Rectangle>
+      <Text fx:id="checkInDate" layoutX="399.0" layoutY="110.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" wrappingWidth="173.869140625" />
+      <Text fx:id="checkOutDate" layoutX="399.0" layoutY="146.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" wrappingWidth="173.869140625" />
+      <Text fx:id="totalDays" layoutX="399.0" layoutY="182.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" wrappingWidth="173.869140625" />
+      <Button layoutX="386.0" layoutY="342.0" mnemonicParsing="false" onMouseClicked="#backButtonClicked" prefHeight="45.0" prefWidth="75.0" text="Back">
+         <effect>
+            <InnerShadow />
+         </effect>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></Button>
+      <Text layoutX="417.0" layoutY="234.0" strokeType="OUTSIDE" strokeWidth="0.0" text="The Amount You Will Pay" underline="true" wrappingWidth="137.076171875" />
+      <Text fx:id="totalPrice" layoutX="469.0" layoutY="269.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Text>
+      <Text layoutX="300.0" layoutY="146.0" strokeType="OUTSIDE" strokeWidth="0.0" text="CVV" />
+      <TextField fx:id="cvv" layoutX="336.0" layoutY="129.0" prefHeight="25.0" prefWidth="33.0" promptText="111">
+         <effect>
+            <InnerShadow />
+         </effect>
+         <cursor>
+            <Cursor fx:constant="TEXT" />
+         </cursor></TextField>
+      <Text layoutX="42.0" layoutY="386.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Installments" />
+      <RadioButton fx:id="installments3" layoutX="188.0" layoutY="373.0" mnemonicParsing="false" text="3">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></RadioButton>
+      <RadioButton fx:id="installments6" layoutX="247.0" layoutY="373.0" mnemonicParsing="false" text="6">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></RadioButton>
+      <RadioButton fx:id="installments9" layoutX="306.0" layoutY="373.0" mnemonicParsing="false" text="9">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></RadioButton>
+      <Text layoutX="47.0" layoutY="401.0" strokeType="OUTSIDE" strokeWidth="0.0" text="(Default is 1)">
+         <font>
+            <Font size="9.0" />
+         </font>
+      </Text>
+   </children>
+   <effect>
+      <InnerShadow />
+   </effect>
+</AnchorPane>

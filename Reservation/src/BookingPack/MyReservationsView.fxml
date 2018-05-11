@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="499.0" style="-fx-background-color: #7fb3c6;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="BookingPack.MyReservationsController">
+   <children>
+      <ListView fx:id="reservationList" layoutY="22.0" prefHeight="378.0" prefWidth="200.0">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <effect>
+            <InnerShadow />
+         </effect></ListView>
+      <Text layoutX="37.0" layoutY="15.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Your Reservations" underline="true">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Text>
+      <Button layoutX="292.0" layoutY="188.0" mnemonicParsing="false" onMouseClicked="#cancelReservationButtonClicked" prefHeight="61.0" prefWidth="116.0" text="Cancel Reservation">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <effect>
+            <InnerShadow />
+         </effect></Button>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#e7e9eb" height="110.0" layoutX="243.0" layoutY="22.0" stroke="BLACK" strokeType="INSIDE" width="213.0">
+         <effect>
+            <InnerShadow />
+         </effect></Rectangle>
+      <Text fx:id="checkInDate" layoutX="262.0" layoutY="50.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Check-In Date: " />
+      <Text fx:id="checkOutDate" layoutX="262.0" layoutY="82.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Check-Out Date: " />
+      <Text fx:id="totalPrice" layoutX="262.0" layoutY="116.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Total Price: " />
+      <Button layoutX="292.0" layoutY="308.0" mnemonicParsing="false" onMouseClicked="#backButtonClicked" prefHeight="61.0" prefWidth="116.0" text="Back">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <effect>
+            <InnerShadow />
+         </effect></Button>
+      <CheckBox fx:id="iAmSure" layoutX="313.0" layoutY="258.0" mnemonicParsing="false" text="I Am Sure">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></CheckBox>
+   </children>
+</AnchorPane>

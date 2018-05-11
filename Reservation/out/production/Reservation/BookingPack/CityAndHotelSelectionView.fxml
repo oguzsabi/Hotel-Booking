@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.effect.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.scene.image.*?>
@@ -14,14 +15,23 @@
       <ListView fx:id="cityList" prefHeight="530.0" prefWidth="252.0">
          <padding>
             <Insets left="5.0" />
-         </padding></ListView>
-      <ListView fx:id="hotelListForAllCities" layoutX="252.0" prefHeight="530.0" prefWidth="252.0" />
-      <AnchorPane fx:id="descriptionAndImagePane" layoutX="504.0" prefHeight="272.0" prefWidth="417.0">
+         </padding>
+         <effect>
+            <InnerShadow />
+         </effect>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></ListView>
+      <ListView fx:id="hotelListForAllCities" layoutX="252.0" prefHeight="530.0" prefWidth="252.0">
+         <effect>
+            <InnerShadow />
+         </effect>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></ListView>
+      <AnchorPane fx:id="descriptionAndImagePane" layoutX="504.0" prefHeight="272.0" prefWidth="417.0" style="-fx-background-color: #7fb3c6;">
          <children>
             <Label fx:id="cityOrHotelName" prefHeight="53.0" prefWidth="417.0" text="Label">
-               <tooltip>
-                  <Tooltip text="Click to image to see other pictures of the city." />
-               </tooltip>
                <font>
                   <Font size="36.0" />
                </font>
@@ -46,10 +56,43 @@
             <Text fx:id="cityPopulationText" layoutX="24.0" layoutY="253.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
             <Text fx:id="cityAltitudeText" layoutX="184.0" layoutY="254.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
             <Text fx:id="annualTouristVisitText" layoutX="332.0" layoutY="253.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
-         </children></AnchorPane>
-      <ImageView fx:id="cityImage" fitHeight="258.0" fitWidth="417.0" layoutX="504.0" layoutY="272.0" pickOnBounds="true" preserveRatio="true" />
-      <Button fx:id="backButton" layoutX="518.0" layoutY="478.0" mnemonicParsing="false" onMouseClicked="#backButtonClicked" prefHeight="25.0" prefWidth="87.0" text="Back" />
-      <Button fx:id="nextButton" layoutX="830.0" layoutY="478.0" mnemonicParsing="false" onMouseClicked="#nextButtonClicked" prefHeight="25.0" prefWidth="87.0" text="Next" />
+         </children>
+         <effect>
+            <InnerShadow />
+         </effect></AnchorPane>
+      <ImageView fitHeight="259.0" fitWidth="417.0" layoutX="504.0" layoutY="271.0" opacity="0.5" pickOnBounds="true">
+         <image>
+            <Image url="@Holiday.jpg" />
+         </image>
+         <effect>
+            <InnerShadow />
+         </effect></ImageView>
+      <Button fx:id="backButton" layoutX="518.0" layoutY="478.0" mnemonicParsing="false" onMouseClicked="#backButtonClicked" prefHeight="25.0" prefWidth="87.0" text="Back">
+         <effect>
+            <InnerShadow />
+         </effect>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></Button>
+      <Button fx:id="nextButton" layoutX="830.0" layoutY="478.0" mnemonicParsing="false" onMouseClicked="#nextButtonClicked" prefHeight="25.0" prefWidth="87.0" text="Next">
+         <effect>
+            <InnerShadow />
+         </effect>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></Button>
       <Separator layoutX="504.0" layoutY="264.0" prefHeight="16.0" prefWidth="417.0" />
+      <Label fx:id="priceWarning" layoutX="818.0" layoutY="257.0" text="(Prices may vary.)">
+         <font>
+            <Font size="9.0" />
+         </font>
+      </Label>
+      <Button layoutX="659.0" layoutY="478.0" mnemonicParsing="false" onMouseClicked="#myReservationsButtonClicked" prefHeight="25.0" prefWidth="115.0" text="My reservations">
+         <effect>
+            <InnerShadow />
+         </effect>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></Button>
    </children>
 </AnchorPane>

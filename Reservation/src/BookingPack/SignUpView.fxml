@@ -33,29 +33,47 @@
                <effect>
                   <InnerShadow />
                </effect>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
             </Button>
             <TextField fx:id="userName" layoutX="13.0" layoutY="71.0" prefHeight="25.0" prefWidth="210.0" promptText="Username (Must start with a lettter)">
                <effect>
                   <InnerShadow />
-               </effect></TextField>
+               </effect>
+               <cursor>
+                  <Cursor fx:constant="TEXT" />
+               </cursor></TextField>
             <PasswordField fx:id="userPassword" layoutX="13.0" layoutY="127.0" prefHeight="25.0" prefWidth="210.0" promptText="Password (Minimum characters: 6)">
                <effect>
                   <InnerShadow />
-               </effect></PasswordField>
+               </effect>
+               <cursor>
+                  <Cursor fx:constant="TEXT" />
+               </cursor></PasswordField>
             <PasswordField fx:id="userPasswordAgain" layoutX="13.0" layoutY="182.0" prefHeight="25.0" prefWidth="210.0" promptText="Password (Minimum characters: 6)">
                <effect>
                   <InnerShadow />
                </effect>
+               <cursor>
+                  <Cursor fx:constant="TEXT" />
+               </cursor>
             </PasswordField>
             <TextField fx:id="userEmail" layoutX="13.0" layoutY="237.0" prefHeight="25.0" prefWidth="210.0" promptText="Email (Must be valid)">
                <effect>
                   <InnerShadow />
                </effect>
+               <cursor>
+                  <Cursor fx:constant="TEXT" />
+               </cursor>
             </TextField>
             <Button fx:id="backButton" layoutX="45.0" layoutY="348.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="143.0" text="Back">
                <effect>
                   <InnerShadow />
                </effect>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
             </Button>
             <Text fill="#3e96bc" layoutX="13.0" layoutY="41.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Please fill the gaps below." textAlignment="CENTER" wrappingWidth="210.0">
                <font>

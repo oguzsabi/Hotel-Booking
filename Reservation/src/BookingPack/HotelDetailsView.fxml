@@ -8,7 +8,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="BookingPack.HotelDetailsController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #7fb3c6;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="BookingPack.HotelDetailsController">
    <children>
       <Text fx:id="hotelNameText" layoutX="8.0" layoutY="31.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" y="-4.0">
          <font>
@@ -16,17 +16,62 @@
          </font>
       </Text>
       <Text fx:id="hotelDescriptionText" layoutX="4.0" layoutY="53.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" wrappingWidth="271.13671875" />
-      <DatePicker fx:id="checkInDate" layoutX="342.0" layoutY="36.0" promptText="Pick a check-in date" />
-      <RadioButton fx:id="singleRoomRadioButton" layoutX="312.0" layoutY="141.0" mnemonicParsing="false" text="Single Room" />
-      <RadioButton fx:id="doubleRoomRadioButton" layoutX="455.0" layoutY="141.0" mnemonicParsing="false" text="Double Room" />
-      <RadioButton fx:id="tripleRoomRadioButton" layoutX="313.0" layoutY="206.0" mnemonicParsing="false" text="Triple Room" />
-      <RadioButton fx:id="quadRoomRadioButton" layoutX="455.0" layoutY="206.0" mnemonicParsing="false" text="Quad Room" />
-      <RadioButton fx:id="queenRoomRadioButton" layoutX="313.0" layoutY="272.0" mnemonicParsing="false" text="Queen Room" />
-      <RadioButton fx:id="kingRoomRadioButton" layoutX="455.0" layoutY="272.0" mnemonicParsing="false" text="King Room" />
-      <Button layoutX="312.0" layoutY="333.0" mnemonicParsing="false" onMouseClicked="#backButtonClicked" prefHeight="46.0" prefWidth="117.0" text="Back" />
-      <Button layoutX="469.0" layoutY="333.0" mnemonicParsing="false" onMouseClicked="#toThePaymentButtonClicked" prefHeight="46.0" prefWidth="117.0" text="To The Payment" />
-      <DatePicker fx:id="checkOutDate" layoutX="342.0" layoutY="69.0" promptText="Pick a check-out date" />
+      <Button layoutX="469.0" layoutY="333.0" mnemonicParsing="false" onMouseClicked="#toThePaymentButtonClicked" prefHeight="46.0" prefWidth="117.0" text="To The Payment">
+         <effect>
+            <InnerShadow />
+         </effect>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></Button>
+      <DatePicker fx:id="checkInDate" layoutX="342.0" layoutY="36.0" promptText="Pick a check-in date">
+         <effect>
+            <InnerShadow />
+         </effect>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></DatePicker>
+      <DatePicker fx:id="checkOutDate" layoutX="342.0" layoutY="69.0" promptText="Pick a check-out date">
+         <effect>
+            <InnerShadow />
+         </effect>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></DatePicker>
+      <RadioButton fx:id="singleRoomRadioButton" layoutX="312.0" layoutY="141.0" mnemonicParsing="false" text="Single Room">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></RadioButton>
+      <RadioButton fx:id="doubleRoomRadioButton" layoutX="455.0" layoutY="141.0" mnemonicParsing="false" text="Double Room">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></RadioButton>
+      <RadioButton fx:id="tripleRoomRadioButton" layoutX="313.0" layoutY="206.0" mnemonicParsing="false" text="Triple Room">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></RadioButton>
+      <RadioButton fx:id="quadRoomRadioButton" layoutX="455.0" layoutY="206.0" mnemonicParsing="false" text="Quad Room">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></RadioButton>
+      <RadioButton fx:id="queenRoomRadioButton" layoutX="313.0" layoutY="272.0" mnemonicParsing="false" text="Queen Room">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></RadioButton>
+      <RadioButton fx:id="kingRoomRadioButton" layoutX="455.0" layoutY="272.0" mnemonicParsing="false" text="King Room">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></RadioButton>
+      <Button layoutX="312.0" layoutY="333.0" mnemonicParsing="false" onMouseClicked="#backButtonClicked" prefHeight="46.0" prefWidth="117.0" text="Back">
+         <effect>
+            <InnerShadow />
+         </effect>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></Button>
       <Separator layoutY="37.0" prefHeight="0.0" prefWidth="287.0" />
       <Separator layoutX="285.0" layoutY="37.0" orientation="VERTICAL" prefHeight="363.0" prefWidth="8.0" />
    </children>
+   <effect>
+      <InnerShadow />
+   </effect>
 </AnchorPane>
